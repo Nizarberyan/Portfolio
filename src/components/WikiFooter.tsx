@@ -1,6 +1,6 @@
 import React from 'react';
 import { personalInfo } from '../data/portfolioData';
-import { Heart, ExternalLink, Globe, Code, ShieldCheck } from 'lucide-react';
+import { Heart, Code } from 'lucide-react';
 
 export const WikiFooter: React.FC = () => {
   return (

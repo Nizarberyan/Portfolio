@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { 
   personalInfo, 
   careerExperience, 
@@ -15,13 +15,11 @@ import { WikiInfobox } from './WikiInfobox';
 
 interface ArticleBodyProps {
   searchQuery: string;
-  onClearSearch: () => void;
   onOpenHistory: () => void;
 }
 
 export const ArticleBody: React.FC<ArticleBodyProps> = ({
   searchQuery,
-  onClearSearch,
   onOpenHistory,
 }) => {
   const filteredProjects = projects.filter((project) => {

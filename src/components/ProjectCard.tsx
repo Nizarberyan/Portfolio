@@ -2,7 +2,6 @@ import React from 'react';
 import { Project } from '../types/portfolio';
 import { ReferencePopover } from './ReferencePopover';
 import { getWikiUrl } from '../data/wikipediaLinks';
-import { ExternalLink } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;

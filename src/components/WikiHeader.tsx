@@ -9,7 +9,6 @@ interface WikiHeaderProps {
   onToggleWidescreen: () => void;
   fontSize: 'sm' | 'base' | 'lg';
   onChangeFontSize: (size: 'sm' | 'base' | 'lg') => void;
-  onOpenHistory: () => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onToggleSidebarMobile: () => void;
@@ -22,7 +21,6 @@ export const WikiHeader: React.FC<WikiHeaderProps> = ({
   onToggleWidescreen,
   fontSize,
   onChangeFontSize,
-  onOpenHistory,
   searchQuery,
   onSearchChange,
   onToggleSidebarMobile,

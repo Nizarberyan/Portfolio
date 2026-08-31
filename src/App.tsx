@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { WikiHeader } from './components/WikiHeader';
 import { TableOfContents } from './components/TableOfContents';
 import { ArticleBody } from './components/ArticleBody';
@@ -70,7 +70,6 @@ export function App() {
         onToggleWidescreen={handleToggleWidescreen}
         fontSize={fontSize}
         onChangeFontSize={setFontSize}
-        onOpenHistory={() => setIsHistoryOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onToggleSidebarMobile={() => setIsMobileSidebarOpen(true)}
@@ -88,7 +87,6 @@ export function App() {
           <div className="mw-content-container">
             <ArticleBody
               searchQuery={searchQuery}
-              onClearSearch={() => setSearchQuery('')}
               onOpenHistory={() => setIsHistoryOpen(true)}
             />
           </div>
