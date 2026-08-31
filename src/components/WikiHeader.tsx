@@ -104,8 +104,10 @@ export const WikiHeader: React.FC<WikiHeaderProps> = ({
                   <text x="25" y="34" fontFamily="Georgia, serif" fontSize="26" fontWeight="bold" fill="#3366cc" textAnchor="middle">W</text>
                 </svg>
                 <span className="mw-logo-container flex flex-col justify-center">
-                  <span className="mw-logo-wordmark text-[#202122] dark:text-[#eaecf0] text-sm sm:text-base md:text-lg font-serif font-bold">WIKIPEDIA</span>
-                  <span className="mw-logo-tagline text-[#54595d] dark:text-[#a2a9b1] normal-case italic text-[9px] sm:text-[10px] hidden xs:block truncate max-w-[120px] sm:max-w-none">
+                  <span className="mw-logo-wordmark text-[#202122] dark:text-[#eaecf0] text-sm sm:text-base md:text-lg font-serif font-bold leading-none">
+                    WIKIPEDIA
+                  </span>
+                  <span className="mw-logo-tagline text-[#54595d] dark:text-[#a2a9b1] normal-case italic text-[10px] sm:text-[11px] leading-tight mt-0.5 whitespace-nowrap">
                     Please don't sue me wikipedia
                   </span>
                 </span>

@@ -122,7 +122,6 @@ export const projects: Project[] = [
       "Developed client interfaces with React Native and Next.js, fully typed in TypeScript."
     ],
     techStack: ["TypeScript", "NestJS", "React Native", "Next.js", "PostgreSQL"],
-    liveUrl: "https://ridemate.example.com",
     githubUrl: "https://github.com/Nizarberyan/ridemate",
     citationId: 3,
     featured: true,
@@ -140,7 +139,6 @@ export const projects: Project[] = [
       "Reduced CI/CD pipeline overhead by 40% through containerized build optimization."
     ],
     techStack: ["Node.js", "NestJS", "MongoDB", "Docker"],
-    liveUrl: "https://lms-api-docs.example.com",
     githubUrl: "https://github.com/Nizarberyan/lms-api",
     citationId: 4,
     featured: true,
@@ -158,7 +156,6 @@ export const projects: Project[] = [
       "Built mobile-responsive web interface using Laravel and Tailwind CSS."
     ],
     techStack: ["Laravel", "Gemini AI", "Tailwind CSS", "PHP"],
-    liveUrl: "https://moneymind.example.com",
     githubUrl: "https://github.com/Nizarberyan/moneymind",
     citationId: 5,
     featured: true,
@@ -177,7 +174,6 @@ export const projects: Project[] = [
       "Paired with Zephyr Mobile, a companion client reading audio metadata (including FLAC and Opus) with battery-efficient background syncing."
     ],
     techStack: ["Go", "TimescaleDB", "SQLC", "Docker", "React Native"],
-    liveUrl: "https://zephyr.example.com",
     githubUrl: "https://github.com/Nizarberyan/zephyr",
     citationId: 6,
     featured: true,

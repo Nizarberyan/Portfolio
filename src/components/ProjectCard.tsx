@@ -37,20 +37,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               <span className="text-[11px] opacity-80">↗</span>
             </a>
           )}
-          {project.githubUrl && project.liveUrl && (
-            <span className="text-gray-300 dark:text-gray-600">•</span>
-          )}
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="wiki-link inline-flex items-center gap-1 font-medium"
-            >
-              Live deployment
-              <span className="text-[11px] opacity-80">↗</span>
-            </a>
-          )}
         </div>
       </div>
 
