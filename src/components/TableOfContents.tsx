@@ -34,11 +34,13 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ variant = 'inl
       window.history.pushState(null, '', ' ');
       return;
     }
-    const target = document.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.pushState(null, '', `#${id}`);
-    }
+    window.location.hash = id;
+    setTimeout(() => {
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
   };
 
   const topLevelSections = sectionsList.filter(s => s.level === 1 && s.id !== 'introduction');

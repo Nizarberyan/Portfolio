@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   personalInfo, 
   careerExperience, 
@@ -12,6 +12,7 @@ import { ProjectCard } from './ProjectCard';
 import { ReferencesSection } from './ReferencesSection';
 import { TableOfContents } from './TableOfContents';
 import { WikiInfobox } from './WikiInfobox';
+import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 
 interface ArticleBodyProps {
   searchQuery: string;
@@ -22,6 +23,60 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
   searchQuery,
   onOpenHistory,
 }) => {
+  // Mobile accordion state for each section
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({
+    'career': false,
+    'education': false,
+    'technical-skills': false,
+    'selected-works': false,
+    'see-also': false,
+    'references': false,
+    'external-links': false,
+  });
+
+  const toggleSection = (sectionId: string) => {
+    setCollapsedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
+  const toggleAllSections = () => {
+    const allCollapsed = Object.values(collapsedSections).every(Boolean);
+    const newState = Object.keys(collapsedSections).reduce((acc, key) => {
+      acc[key] = !allCollapsed;
+      return acc;
+    }, {} as Record<string, boolean>);
+    setCollapsedSections(newState);
+  };
+
+  // Automatically expand target section when user taps TOC anchor
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        if (['career', 'career-izydesk'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, career: false }));
+        } else if (['education'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, education: false }));
+        } else if (['technical-skills', 'backend-skills', 'frontend-skills', 'infra-skills'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, 'technical-skills': false }));
+        } else if (['selected-works', 'project-ridemate', 'project-lms-api', 'project-moneymind', 'project-zephyr'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, 'selected-works': false }));
+        } else if (['see-also'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, 'see-also': false }));
+        } else if (['references'].includes(hash) || hash.startsWith('cite_note-')) {
+          setCollapsedSections(prev => ({ ...prev, 'references': false }));
+        } else if (['external-links'].includes(hash)) {
+          setCollapsedSections(prev => ({ ...prev, 'external-links': false }));
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const filteredProjects = projects.filter((project) => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
@@ -36,15 +91,17 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
 
   return (
     <div className="mw-body">
-      {/* Titlebar (Vector 2022) */}
+      {/* Titlebar (Vector 2022 / Minerva) */}
       <header className="vector-page-titlebar">
-        <h1 id="firstHeading" className="firstHeading mw-first-heading">
-          <span lang="en" dir="ltr">
-            <span className="mw-page-title-main">{personalInfo.name}</span>
-          </span>
-        </h1>
-        <div className="text-xs text-[#54595d] dark:text-[#a2a9b1] font-sans">
-          <span>(full-stack developer)</span>
+        <div>
+          <h1 id="firstHeading" className="firstHeading mw-first-heading">
+            <span lang="en" dir="ltr">
+              <span className="mw-page-title-main">{personalInfo.name}</span>
+            </span>
+          </h1>
+          <div className="text-xs text-[#54595d] dark:text-[#a2a9b1] font-sans mt-0.5">
+            <span>(full-stack developer)</span>
+          </div>
         </div>
       </header>
 
@@ -73,7 +130,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
           </a>
           <button
             onClick={onOpenHistory}
-            className="vector-tab"
+            className="vector-tab cursor-pointer bg-transparent border-none"
           >
             View history
           </button>
@@ -85,7 +142,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
         <div id="mw-content-text" className="mw-body-content">
           <div className="mw-parser-output">
             {/* Hatnote */}
-            <div className="hatnote navigation-not-searchable" role="note">
+            <div className="hatnote navigation-not-searchable text-xs" role="note">
               This article is about the full-stack developer. For other uses, see{' '}
               <a
                 href="https://en.wikipedia.org/wiki/Nizar"
@@ -98,7 +155,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
               .
             </div>
 
-            {/* Infobox floats right at the top of content */}
+            {/* Infobox floats right on desktop, stacks as clean card on mobile */}
             <WikiInfobox />
 
             {/* Lede Paragraphs */}
@@ -136,16 +193,35 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
               <ReferencePopover id={2} />
             </p>
 
-            {/* Inline TOC on narrow screens */}
-            <div className="xl:hidden">
+            {/* Inline TOC on mobile / tablet */}
+            <div className="xl:hidden my-3">
               <TableOfContents variant="inline" />
             </div>
 
+            {/* Mobile Accordion Expand/Collapse All Button */}
+            <div className="flex items-center justify-end md:hidden py-1 mb-2">
+              <button
+                onClick={toggleAllSections}
+                className="inline-flex items-center gap-1 text-[11px] text-[#3366cc] dark:text-[#6ea8fe] font-mono bg-transparent border-none p-0 cursor-pointer"
+              >
+                <ChevronsUpDown className="w-3 h-3" />
+                <span>Toggle all sections</span>
+              </button>
+            </div>
+
             {/* Career */}
-            <section id="career" className="scroll-mt-16 clear-left">
-              <h2>
-                <span className="mw-headline">Career</span>
-                <span className="mw-editsection">
+            <section id="career" className="scroll-mt-14 clear-left">
+              <h2
+                onClick={() => toggleSection('career')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Career</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['career'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
+                <span className="mw-editsection" onClick={(e) => e.stopPropagation()}>
                   <span className="mw-editsection-bracket">[</span>
                   <a
                     href={`mailto:${personalInfo.email}?subject=Career%20Inquiry%20-%20Nizar%20Beriane`}
@@ -158,47 +234,59 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                 </span>
               </h2>
 
-              {careerExperience.map((exp, index) => (
-                <div key={index} id="career-izydesk" className="mb-4">
-                  <h3>
-                    <span>
-                      {exp.role},{' '}
-                      <a
-                        href="https://izydesk.fr"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="wiki-link"
-                      >
-                        IzyDesk
-                      </a>{' '}
-                      ({exp.period})
-                    </span>
-                    <ReferencePopover id={exp.citationId} />
-                  </h3>
-                  <p>
-                    <a
-                      href="https://izydesk.fr"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="wiki-link"
-                    >
-                      IzyDesk
-                    </a>{' '}
-                    (<a href="https://izydesk.fr" target="_blank" rel="noopener noreferrer" className="wiki-link font-mono text-sm">izydesk.fr</a>) is a custom enterprise software development agency focused on internal tools for B2B clients. During this internship, designed the backend for Resaly Pro, a salon management system, using{' '}
-                    <a href={getWikiUrl("Symfony")} target="_blank" rel="noopener noreferrer" className="wiki-link">Symfony</a> and{' '}
-                    <a href={getWikiUrl("PostgreSQL")} target="_blank" rel="noopener noreferrer" className="wiki-link">PostgreSQL</a>, achieving sub-100ms scheduling response times. Built the cross-platform mobile client in{' '}
-                    <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">Flutter</a> for automated scheduling and billing, boosting operational efficiency by 30%. Developed analytical dashboards via a custom{' '}
-                    <a href={getWikiUrl("REST API")} target="_blank" rel="noopener noreferrer" className="wiki-link">REST API</a>, saving salon managers over 5 hours weekly on manual reporting. Resaly Pro was adopted by 15+ local businesses.
-                  </p>
+              {!collapsedSections['career'] && (
+                <div className="section-content">
+                  {careerExperience.map((exp, index) => (
+                    <div key={index} id="career-izydesk" className="mb-4">
+                      <h3>
+                        <span>
+                          {exp.role},{' '}
+                          <a
+                            href="https://izydesk.fr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="wiki-link"
+                          >
+                            IzyDesk
+                          </a>{' '}
+                          ({exp.period})
+                        </span>
+                        <ReferencePopover id={exp.citationId} />
+                      </h3>
+                      <p>
+                        <a
+                          href="https://izydesk.fr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="wiki-link"
+                        >
+                          IzyDesk
+                        </a>{' '}
+                        (<a href="https://izydesk.fr" target="_blank" rel="noopener noreferrer" className="wiki-link font-mono text-sm">izydesk.fr</a>) is a custom enterprise software development agency focused on internal tools for B2B clients. During this internship, designed the backend for Resaly Pro, a salon management system, using{' '}
+                        <a href={getWikiUrl("Symfony")} target="_blank" rel="noopener noreferrer" className="wiki-link">Symfony</a> and{' '}
+                        <a href={getWikiUrl("PostgreSQL")} target="_blank" rel="noopener noreferrer" className="wiki-link">PostgreSQL</a>, achieving sub-100ms scheduling response times. Built the cross-platform mobile client in{' '}
+                        <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">Flutter</a> for automated scheduling and billing, boosting operational efficiency by 30%. Developed analytical dashboards via a custom{' '}
+                        <a href={getWikiUrl("REST API")} target="_blank" rel="noopener noreferrer" className="wiki-link">REST API</a>, saving salon managers over 5 hours weekly on manual reporting. Resaly Pro was adopted by 15+ local businesses.
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </section>
 
             {/* Education */}
-            <section id="education" className="scroll-mt-16">
-              <h2>
-                <span className="mw-headline">Education</span>
-                <span className="mw-editsection">
+            <section id="education" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('education')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Education</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['education'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
+                <span className="mw-editsection" onClick={(e) => e.stopPropagation()}>
                   <span className="mw-editsection-bracket">[</span>
                   <a
                     href={`mailto:${personalInfo.email}?subject=Education%20Inquiry%20-%20Nizar%20Beriane`}
@@ -211,150 +299,220 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                 </span>
               </h2>
 
-              {educationList.map((edu, index) => (
-                <div key={index} className="mb-4">
-                  <h3>
-                    <span>
-                      <a href="https://youcode.ma" target="_blank" rel="noopener noreferrer" className="wiki-link">YouCode Morocco</a> (
-                      <a href="https://en.wikipedia.org/wiki/Mohammed_VI_Polytechnic_University" target="_blank" rel="noopener noreferrer" className="wiki-link">UM6P</a>
-                      ), in partnership with{' '}
-                      <a href={getWikiUrl("Simplon.co")} target="_blank" rel="noopener noreferrer" className="wiki-link">
-                        {edu.partner}
-                      </a>{' '}
-                      ({edu.period})
-                    </span>
-                    <ReferencePopover id={edu.citationId} />
-                  </h3>
-                  <p>
-                    {edu.summary} Focus areas included backend systems in{' '}
-                    <a href={getWikiUrl("Go")} target="_blank" rel="noopener noreferrer" className="wiki-link">Go</a> and{' '}
-                    <a href={getWikiUrl("Node.js")} target="_blank" rel="noopener noreferrer" className="wiki-link">Node.js</a>, and infrastructure management with{' '}
-                    <a href={getWikiUrl("Docker")} target="_blank" rel="noopener noreferrer" className="wiki-link">Docker</a> and{' '}
-                    <a href={getWikiUrl("CI/CD")} target="_blank" rel="noopener noreferrer" className="wiki-link">CI/CD</a>.
-                  </p>
+              {!collapsedSections['education'] && (
+                <div className="section-content">
+                  {educationList.map((edu, index) => (
+                    <div key={index} className="mb-4">
+                      <h3>
+                        <span>
+                          <a href="https://youcode.ma" target="_blank" rel="noopener noreferrer" className="wiki-link">YouCode Morocco</a> (
+                          <a href="https://en.wikipedia.org/wiki/Mohammed_VI_Polytechnic_University" target="_blank" rel="noopener noreferrer" className="wiki-link">UM6P</a>
+                          ), in partnership with{' '}
+                          <a href={getWikiUrl("Simplon.co")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                            {edu.partner}
+                          </a>{' '}
+                          ({edu.period})
+                        </span>
+                        <ReferencePopover id={edu.citationId} />
+                      </h3>
+                      <p>
+                        {edu.summary} Focus areas included backend systems in{' '}
+                        <a href={getWikiUrl("Go")} target="_blank" rel="noopener noreferrer" className="wiki-link">Go</a> and{' '}
+                        <a href={getWikiUrl("Node.js")} target="_blank" rel="noopener noreferrer" className="wiki-link">Node.js</a>, and infrastructure management with{' '}
+                        <a href={getWikiUrl("Docker")} target="_blank" rel="noopener noreferrer" className="wiki-link">Docker</a> and{' '}
+                        <a href={getWikiUrl("CI/CD")} target="_blank" rel="noopener noreferrer" className="wiki-link">CI/CD</a>.
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </section>
 
             {/* Technical Skills */}
-            <section id="technical-skills" className="scroll-mt-16">
-              <h2>
-                <span className="mw-headline">Technical skills</span>
+            <section id="technical-skills" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('technical-skills')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Technical skills</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['technical-skills'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
               </h2>
 
-              <ul>
-                {skillCategories.map((cat, idx) => (
-                  <li key={idx} id={cat.category === 'Backend' ? 'backend-skills' : cat.category.includes('Frontend') ? 'frontend-skills' : 'infra-skills'}>
-                    <strong>{cat.category}: </strong>
-                    {cat.skills.map((skill, sIdx) => (
-                      <React.Fragment key={skill.name}>
-                        <a
-                          href={skill.wikiUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="wiki-link"
-                          title={`${skill.name} – Wikipedia`}
-                        >
-                          {skill.name}
-                        </a>
-                        {sIdx < cat.skills.length - 1 && <span>, </span>}
-                      </React.Fragment>
+              {!collapsedSections['technical-skills'] && (
+                <div className="section-content">
+                  <ul className="space-y-1">
+                    {skillCategories.map((cat, idx) => (
+                      <li key={idx} id={cat.category === 'Backend' ? 'backend-skills' : cat.category.includes('Frontend') ? 'frontend-skills' : 'infra-skills'}>
+                        <strong>{cat.category}: </strong>
+                        {cat.skills.map((skill, sIdx) => (
+                          <React.Fragment key={skill.name}>
+                            <a
+                              href={skill.wikiUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="wiki-link"
+                              title={`${skill.name} – Wikipedia`}
+                            >
+                              {skill.name}
+                            </a>
+                            {sIdx < cat.skills.length - 1 && <span>, </span>}
+                          </React.Fragment>
+                        ))}
+                      </li>
                     ))}
-                  </li>
-                ))}
-              </ul>
+                  </ul>
+                </div>
+              )}
             </section>
 
             {/* Selected Works */}
-            <section id="selected-works" className="scroll-mt-16">
-              <h2>
-                <span className="mw-headline">Selected works</span>
+            <section id="selected-works" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('selected-works')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Selected works</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['selected-works'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
               </h2>
 
-              <div className="space-y-4">
-                {filteredProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} />
-                ))}
-              </div>
+              {!collapsedSections['selected-works'] && (
+                <div className="section-content space-y-4">
+                  {filteredProjects.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              )}
             </section>
 
             {/* See also */}
-            <section id="see-also" className="scroll-mt-16">
-              <h2>
-                <span className="mw-headline">See also</span>
+            <section id="see-also" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('see-also')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">See also</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['see-also'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
               </h2>
-              <ul>
-                <li>
-                  <a
-                    href={personalInfo.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external"
-                  >
-                    Curriculum Vitae (PDF)
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={personalInfo.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external"
-                  >
-                    GitHub: github.com/Nizarberyan
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={personalInfo.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external"
-                  >
-                    LinkedIn: linkedin.com/in/nizar-beriane
-                  </a>
-                </li>
-              </ul>
+
+              {!collapsedSections['see-also'] && (
+                <div className="section-content">
+                  <ul>
+                    <li>
+                      <a
+                        href={personalInfo.resumeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="external"
+                      >
+                        Curriculum Vitae (PDF)
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={personalInfo.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="external"
+                      >
+                        GitHub: github.com/Nizarberyan
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={personalInfo.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="external"
+                      >
+                        LinkedIn: linkedin.com/in/nizar-beriane
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </section>
 
             {/* References */}
-            <ReferencesSection />
+            <section id="references" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('references')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">References</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['references'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
+              </h2>
+
+              {!collapsedSections['references'] && (
+                <div className="section-content">
+                  <ReferencesSection />
+                </div>
+              )}
+            </section>
 
             {/* External links */}
-            <section id="external-links" className="scroll-mt-16">
-              <h2>
-                <span className="mw-headline">External links</span>
+            <section id="external-links" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('external-links')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">External links</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['external-links'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
               </h2>
-              <ul>
-                <li>
-                  <a
-                    href={personalInfo.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external"
-                  >
-                    Official GitHub repository directory
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={personalInfo.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external"
-                  >
-                    Official LinkedIn profile
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`mailto:${personalInfo.email}`}
-                    className="wiki-link"
-                  >
-                    Electronic mail: {personalInfo.email}
-                  </a>
-                </li>
-              </ul>
+
+              {!collapsedSections['external-links'] && (
+                <div className="section-content">
+                  <ul>
+                    <li>
+                      <a
+                        href={personalInfo.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="external"
+                      >
+                        Official GitHub repository directory
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={personalInfo.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="external"
+                      >
+                        Official LinkedIn profile
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={`mailto:${personalInfo.email}`}
+                        className="wiki-link"
+                      >
+                        Electronic mail: {personalInfo.email}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </section>
 
             {/* Categories box */}

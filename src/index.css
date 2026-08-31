@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   AUTHENTIC WIKIPEDIA VECTOR 2022 STYLESHEET
+   AUTHENTIC WIKIPEDIA VECTOR 2022 & MOBILE MINERVA STYLESHEET
    ========================================================================== */
 
 :root {
@@ -117,7 +117,7 @@ a:visited {
 }
 
 /* ==========================================================================
-   HEADER & NAVIGATION BAR (STRICTLY FIXED UI SIZING)
+   HEADER & NAVIGATION BAR (FIXED UI SIZING)
    ========================================================================== */
 
 .vector-header-container {
@@ -135,13 +135,20 @@ a:visited {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 54px !important;
+  height: 52px !important;
   width: 100%;
   max-width: 1540px;
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: border-box;
   transition: max-width 0.2s ease, padding 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .vector-header {
+    padding: 0 12px;
+    height: 48px !important;
+  }
 }
 
 .widescreen-enabled .vector-header {
@@ -152,7 +159,7 @@ a:visited {
 .mw-logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none !important;
   color: var(--color-base);
   user-select: none;
@@ -164,9 +171,16 @@ a:visited {
 }
 
 .mw-logo-icon {
-  width: 36px !important;
-  height: 36px !important;
+  width: 32px !important;
+  height: 32px !important;
   flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .mw-logo-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
 }
 
 .mw-logo-container {
@@ -177,18 +191,24 @@ a:visited {
 
 .mw-logo-wordmark {
   font-family: var(--font-family-serif);
-  font-size: 20px !important;
+  font-size: 1.15rem !important;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1 !important;
 }
 
+@media (min-width: 640px) {
+  .mw-logo-wordmark {
+    font-size: 1.3rem !important;
+  }
+}
+
 .mw-logo-tagline {
   font-family: var(--font-family-sans);
-  font-size: 11px !important;
+  font-size: 10px !important;
   letter-spacing: 0.01em;
   color: var(--color-subtle);
-  margin-top: 2px;
+  margin-top: 1px;
   line-height: 1.1 !important;
 }
 
@@ -259,8 +279,8 @@ a:visited {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 34px !important;
-  padding: 0 12px;
+  height: 32px !important;
+  padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 2px;
   font-size: 13px !important;
@@ -271,7 +291,6 @@ a:visited {
   text-decoration: none !important;
   user-select: none;
   box-sizing: border-box;
-  line-height: 34px !important;
 }
 
 .cdx-btn:hover {
@@ -289,14 +308,14 @@ a:visited {
 }
 
 /* ==========================================================================
-   PAGE CONTAINER & LAYOUT (VECTOR 2022)
+   PAGE CONTAINER & LAYOUT (VECTOR 2022 & MOBILE)
    ========================================================================== */
 
 .mw-page-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - 52px);
 }
 
 .mw-page-container-inner {
@@ -307,6 +326,12 @@ a:visited {
   padding: 0 16px;
   box-sizing: border-box;
   transition: max-width 0.2s ease, padding 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .mw-page-container-inner {
+    padding: 0;
+  }
 }
 
 .widescreen-enabled .mw-page-container-inner {
@@ -342,6 +367,13 @@ a:visited {
   line-height: var(--line-height-content);
 }
 
+@media (max-width: 640px) {
+  .mw-body {
+    border: none;
+    padding: 12px 16px 24px;
+  }
+}
+
 /* Titlebar */
 .vector-page-titlebar {
   display: flex;
@@ -354,10 +386,10 @@ a:visited {
 
 .firstHeading {
   font-family: var(--font-family-serif);
-  font-size: calc(var(--font-size-base) * 1.9);
+  font-size: calc(var(--font-size-base) * 1.8);
   font-weight: normal;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--color-emphasized);
 }
 
@@ -387,6 +419,13 @@ a:visited {
   font-size: inherit;
 }
 
+@media (max-width: 640px) {
+  .vector-tab {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+}
+
 .vector-tab:hover {
   text-decoration: none;
   color: var(--color-progressive--hover);
@@ -404,7 +443,7 @@ a:visited {
 
 .vector-sticky-pinned-container {
   position: sticky;
-  top: 64px;
+  top: 60px;
   max-height: calc(100vh - 80px);
   overflow-y: auto;
 }
@@ -461,7 +500,7 @@ a:visited {
 }
 
 /* ==========================================================================
-   WIKIPEDIA INFOBOX (CLASSIC & VECTOR 2022)
+   WIKIPEDIA INFOBOX (RESPONSIVE TABLE / CARD)
    ========================================================================== */
 
 table.infobox {
@@ -478,24 +517,25 @@ table.infobox {
   border-collapse: collapse;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   table.infobox {
     float: none;
     width: 100%;
-    margin: 0 0 1em 0;
+    margin: 12px 0 16px 0;
+    font-size: 0.875rem;
   }
 }
 
 table.infobox th,
 table.infobox td {
-  padding: 0.35em 0.6em;
+  padding: 0.4em 0.6em;
   vertical-align: top;
   border-top: 1px solid var(--border-color-muted);
 }
 
 table.infobox .infobox-above {
   font-family: var(--font-family-serif);
-  font-size: 125%;
+  font-size: 120%;
   font-weight: bold;
   text-align: center;
   background-color: var(--background-color-interactive);
@@ -535,7 +575,7 @@ table.infobox .infobox-data {
 }
 
 /* ==========================================================================
-   WIKIPEDIA HEADINGS & CONTENT TYPOGRAPHY
+   WIKIPEDIA HEADINGS & MOBILE COLLAPSIBLE ACCORDION
    ========================================================================== */
 
 .mw-parser-output {
@@ -545,22 +585,37 @@ table.infobox .infobox-data {
 
 .mw-parser-output h2 {
   font-family: var(--font-family-serif);
-  font-size: calc(var(--font-size-base) * 1.5);
+  font-size: calc(var(--font-size-base) * 1.4);
   font-weight: normal;
   border-bottom: 1px solid var(--border-color-base);
-  margin-top: 1.8em;
+  margin-top: 1.5em;
   margin-bottom: 0.4em;
-  padding-bottom: 0.2em;
+  padding-bottom: 0.25em;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .mw-parser-output h2.mobile-collapsible {
+    cursor: pointer;
+    user-select: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 1.2em;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mw-parser-output h2.mobile-collapsible:active {
+    background-color: var(--background-color-interactive-subtle);
+  }
 }
 
 .mw-parser-output h3 {
   font-family: var(--font-family-serif);
-  font-size: calc(var(--font-size-base) * 1.2);
+  font-size: calc(var(--font-size-base) * 1.15);
   font-weight: bold;
-  margin-top: 1.4em;
+  margin-top: 1.2em;
   margin-bottom: 0.3em;
 }
 
@@ -569,7 +624,7 @@ table.infobox .infobox-data {
 }
 
 .mw-parser-output ul {
-  margin: 0.3em 0 0.8em 1.6em;
+  margin: 0.3em 0 0.8em 1.4em;
   padding: 0;
 }
 
@@ -611,7 +666,7 @@ table.infobox .infobox-data {
 }
 
 .reflist ol.references {
-  margin: 0.5em 0 0 2em;
+  margin: 0.5em 0 0 1.6em;
   padding: 0;
   list-style-type: decimal;
 }
@@ -625,7 +680,7 @@ table.infobox .infobox-data {
 #catlinks {
   border: 1px solid var(--border-color-base);
   background-color: var(--background-color-neutral-subtle);
-  padding: 6px 12px;
+  padding: 8px 12px;
   margin-top: 2em;
   font-size: calc(var(--font-size-base) * 0.88);
   clear: both;
@@ -653,7 +708,7 @@ table.infobox .infobox-data {
 /* Edit link bracket */
 .mw-editsection {
   font-family: var(--font-family-sans);
-  font-size: calc(var(--font-size-base) * 0.8);
+  font-size: calc(var(--font-size-base) * 0.75);
   font-weight: normal;
   margin-left: 0.5rem;
 }
