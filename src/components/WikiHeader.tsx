@@ -97,15 +97,17 @@ export const WikiHeader: React.FC<WikiHeaderProps> = ({
                 <Menu className="w-5 h-5" />
               </button>
 
-              <a href="#" className="mw-logo">
+              <a href="#" className="mw-logo flex items-center gap-1.5 sm:gap-2">
                 {/* Wikipedia Globe Icon SVG */}
-                <svg className="mw-logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="mw-logo-icon shrink-0" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="25" cy="25" r="23" stroke="#3366cc" strokeWidth="2.5" fill="#f8f9fa"/>
                   <text x="25" y="34" fontFamily="Georgia, serif" fontSize="26" fontWeight="bold" fill="#3366cc" textAnchor="middle">W</text>
                 </svg>
-                <span className="mw-logo-container">
-                  <span className="mw-logo-wordmark text-[#202122] dark:text-[#eaecf0]">WIKIPEDIA</span>
-                  <span className="mw-logo-tagline text-[#54595d] dark:text-[#a2a9b1] normal-case italic text-[10px]">Please don't sue me wikipedia</span>
+                <span className="mw-logo-container flex flex-col justify-center">
+                  <span className="mw-logo-wordmark text-[#202122] dark:text-[#eaecf0] text-sm sm:text-base md:text-lg font-serif font-bold">WIKIPEDIA</span>
+                  <span className="mw-logo-tagline text-[#54595d] dark:text-[#a2a9b1] normal-case italic text-[9px] sm:text-[10px] hidden xs:block truncate max-w-[120px] sm:max-w-none">
+                    Please don't sue me wikipedia
+                  </span>
                 </span>
               </a>
             </div>
@@ -276,10 +278,11 @@ export const WikiHeader: React.FC<WikiHeaderProps> = ({
               {/* Direct Email Contact Link */}
               <a
                 href={`mailto:${personalInfo.email}?subject=Contact%20from%20Portfolio`}
-                className="cdx-btn cdx-btn--primary text-xs px-2.5"
+                className="cdx-btn cdx-btn--primary text-xs px-2 sm:px-2.5 h-[32px] flex items-center gap-1"
+                title="Contact via Email"
               >
-                <Mail className="w-3.5 h-3.5" />
-                <span className="hidden xs:inline">Contact</span>
+                <Mail className="w-3.5 h-3.5 shrink-0" />
+                <span className="hidden sm:inline">Contact</span>
               </a>
             </div>
           </>
