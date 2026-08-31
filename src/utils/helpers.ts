@@ -13,20 +13,20 @@ export function formatWikipediaText(text: string): React.ReactNode[] {
 
   return parts.map((part, index) => {
     if (WIKIPEDIA_LINKS[part]) {
-      return (
-        <a
-          key={index}
-          href={WIKIPEDIA_LINKS[part]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="wiki-link font-medium inline-flex items-center"
-          title={`${part} – Wikipedia`}
-        >
-          {part}
-        </a>
+      return React.createElement(
+        'a',
+        {
+          key: index,
+          href: WIKIPEDIA_LINKS[part],
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          className: 'wiki-link font-medium inline-flex items-center',
+          title: `${part} – Wikipedia`,
+        },
+        part
       );
     }
-    return <span key={index}>{part}</span>;
+    return React.createElement('span', { key: index }, part);
   });
 }
 
