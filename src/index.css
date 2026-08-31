@@ -1,0 +1,659 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   AUTHENTIC WIKIPEDIA VECTOR 2022 STYLESHEET
+   ========================================================================== */
+
+:root {
+  --background-color-base: #ffffff;
+  --background-color-neutral: #eaecf0;
+  --background-color-neutral-subtle: #f8f9fa;
+  --background-color-interactive: #eaecf0;
+  --background-color-interactive-subtle: #f8f9fa;
+  --background-color-interactive-subtle--hover: #eaecf0;
+  --background-color-interactive-subtle--active: #dadde3;
+  --color-base: #202122;
+  --color-base--subtle: #54595d;
+  --color-subtle: #54595d;
+  --color-emphasized: #101418;
+  --color-progressive: #3366cc;
+  --color-progressive--hover: #0645ad;
+  --color-progressive--active: #0b0080;
+  --color-visited: #0b0080;
+  --border-color-base: #a2a9b1;
+  --border-color-subtle: #c8ccd1;
+  --border-color-muted: #eaecf0;
+  --border-color-interactive: #72777d;
+  --font-family-serif: 'Linux Libertine', 'Source Serif 4', 'Noto Serif', Georgia, 'Times New Roman', Times, serif;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, Helvetica, Arial, sans-serif;
+  --font-size-base: 0.9375rem; /* 15px */
+  --line-height-content: 1.6;
+}
+
+/* Font Size Scaling for Article Content only */
+html.font-size-sm {
+  --font-size-base: 0.8125rem; /* 13px */
+  --line-height-content: 1.5;
+}
+
+html.font-size-base {
+  --font-size-base: 0.9375rem; /* 15px */
+  --line-height-content: 1.6;
+}
+
+html.font-size-lg {
+  --font-size-base: 1.125rem; /* 18px */
+  --line-height-content: 1.75;
+}
+
+.dark {
+  --background-color-base: #101418;
+  --background-color-neutral: #27292d;
+  --background-color-neutral-subtle: #1a1d20;
+  --background-color-interactive: #27292d;
+  --background-color-interactive-subtle: #202122;
+  --background-color-interactive-subtle--hover: #27292d;
+  --background-color-interactive-subtle--active: #404244;
+  --color-base: #eaecf0;
+  --color-base--subtle: #a2a9b1;
+  --color-subtle: #a2a9b1;
+  --color-emphasized: #f8f9fa;
+  --color-progressive: #6ea8fe;
+  --color-progressive--hover: #9ec5fe;
+  --color-progressive--active: #b6d4fb;
+  --color-visited: #c290e2;
+  --border-color-base: #54595d;
+  --border-color-subtle: #3c4043;
+  --border-color-muted: #27292d;
+  --border-color-interactive: #a2a9b1;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--background-color-neutral-subtle);
+  color: var(--color-base);
+}
+
+body {
+  font-family: var(--font-family-sans);
+  margin: 0;
+  padding: 0;
+  color: var(--color-base);
+  background-color: var(--background-color-neutral-subtle);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Wikipedia Links */
+a, .wiki-link {
+  color: var(--color-progressive);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover, .wiki-link:hover {
+  color: var(--color-progressive--hover);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--color-visited);
+}
+
+/* External Link Icon */
+.mw-parser-output a.external,
+.external-link {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2336c' d='M1.5 1a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6.5a.5.5 0 0 0-1 0V10H2V2h3.5a.5.5 0 0 0 0-1H1.5z'/%3E%3Cpath fill='%2336c' d='M11.854.146a.5.5 0 0 0-.508-.125l-4 1a.5.5 0 0 0 .242.97l2.582-.646-4.508 4.509a.5.5 0 0 0 .708.708L10.879 2.053l-.646 2.582a.5.5 0 0 0 .97.242l1-4a.5.5 0 0 0-.349-.731z'/%3E%3C/svg%3E");
+  background-position: center right;
+  background-repeat: no-repeat;
+  padding-right: 14px;
+}
+
+.dark .mw-parser-output a.external,
+.dark .external-link {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236ea8fe' d='M1.5 1a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6.5a.5.5 0 0 0-1 0V10H2V2h3.5a.5.5 0 0 0 0-1H1.5z'/%3E%3Cpath fill='%236ea8fe' d='M11.854.146a.5.5 0 0 0-.508-.125l-4 1a.5.5 0 0 0 .242.97l2.582-.646-4.508 4.509a.5.5 0 0 0 .708.708L10.879 2.053l-.646 2.582a.5.5 0 0 0 .97.242l1-4a.5.5 0 0 0-.349-.731z'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION BAR (STRICTLY FIXED UI SIZING)
+   ========================================================================== */
+
+.vector-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--background-color-base);
+  border-bottom: 1px solid var(--border-color-subtle);
+  width: 100%;
+  font-size: 13px !important;
+  line-height: normal !important;
+}
+
+.vector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px !important;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  transition: max-width 0.2s ease, padding 0.2s ease;
+}
+
+.widescreen-enabled .vector-header {
+  max-width: 100%;
+  padding: 0 24px;
+}
+
+.mw-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none !important;
+  color: var(--color-base);
+  user-select: none;
+  height: 38px;
+}
+
+.mw-logo:hover {
+  text-decoration: none !important;
+}
+
+.mw-logo-icon {
+  width: 36px !important;
+  height: 36px !important;
+  flex-shrink: 0;
+}
+
+.mw-logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mw-logo-wordmark {
+  font-family: var(--font-family-serif);
+  font-size: 20px !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1 !important;
+}
+
+.mw-logo-tagline {
+  font-family: var(--font-family-sans);
+  font-size: 11px !important;
+  letter-spacing: 0.01em;
+  color: var(--color-subtle);
+  margin-top: 2px;
+  line-height: 1.1 !important;
+}
+
+/* Search Input Box */
+.cdx-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 34px !important;
+}
+
+.cdx-search-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-color-interactive-subtle);
+  border: 1px solid var(--border-color-subtle);
+  border-radius: 2px 0 0 2px;
+  height: 34px !important;
+  flex: 1;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.cdx-search-box:focus-within {
+  background-color: var(--background-color-base);
+  border-color: var(--color-progressive);
+  box-shadow: inset 0 0 0 1px var(--color-progressive);
+}
+
+.cdx-search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13px !important;
+  color: var(--color-base);
+  height: 100% !important;
+  line-height: 34px !important;
+}
+
+.cdx-search-input::placeholder {
+  color: var(--color-subtle);
+}
+
+.cdx-search-button {
+  background-color: var(--background-color-interactive-subtle);
+  border: 1px solid var(--border-color-subtle);
+  border-left: none;
+  border-radius: 0 2px 2px 0;
+  height: 34px !important;
+  padding: 0 14px;
+  font-size: 13px !important;
+  font-weight: 700;
+  color: var(--color-base);
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cdx-search-button:hover {
+  background-color: var(--background-color-interactive);
+}
+
+/* Standard Vector Button */
+.cdx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px !important;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 13px !important;
+  font-weight: 700;
+  color: var(--color-base);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none !important;
+  user-select: none;
+  box-sizing: border-box;
+  line-height: 34px !important;
+}
+
+.cdx-btn:hover {
+  background-color: var(--background-color-interactive-subtle--hover);
+}
+
+.cdx-btn--primary {
+  background-color: var(--color-progressive);
+  color: #ffffff !important;
+  border-color: transparent;
+}
+
+.cdx-btn--primary:hover {
+  background-color: var(--color-progressive--hover);
+}
+
+/* ==========================================================================
+   PAGE CONTAINER & LAYOUT (VECTOR 2022)
+   ========================================================================== */
+
+.mw-page-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 54px);
+}
+
+.mw-page-container-inner {
+  display: flex;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  transition: max-width 0.2s ease, padding 0.2s ease;
+}
+
+.widescreen-enabled .mw-page-container-inner {
+  max-width: 100%;
+  padding: 0 24px;
+}
+
+.vector-column-start {
+  width: 240px;
+  flex-shrink: 0;
+  margin-right: 24px;
+  display: none;
+}
+
+@media (min-width: 1120px) {
+  .vector-column-start {
+    display: block;
+  }
+}
+
+.mw-content-container {
+  flex: 1 1 0%;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.mw-body {
+  background-color: var(--background-color-base);
+  border: 1px solid var(--border-color-subtle);
+  border-top: none;
+  padding: 16px 24px 32px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-content);
+}
+
+/* Titlebar */
+.vector-page-titlebar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color-base);
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+}
+
+.firstHeading {
+  font-family: var(--font-family-serif);
+  font-size: calc(var(--font-size-base) * 1.9);
+  font-weight: normal;
+  margin: 0;
+  line-height: 1.25;
+  color: var(--color-emphasized);
+}
+
+/* Navigation Tabs (Article / Talk / Read / View Source / View History) */
+.vector-page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color-base);
+  margin-bottom: 12px;
+  font-size: calc(var(--font-size-base) * 0.88);
+}
+
+.vector-tabs {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vector-tab {
+  padding: 8px 12px;
+  color: var(--color-progressive);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  font-size: inherit;
+}
+
+.vector-tab:hover {
+  text-decoration: none;
+  color: var(--color-progressive--hover);
+}
+
+.vector-tab.selected {
+  color: var(--color-base);
+  border-bottom-color: var(--color-progressive);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   SIDEBAR TABLE OF CONTENTS (VECTOR 2022)
+   ========================================================================== */
+
+.vector-sticky-pinned-container {
+  position: sticky;
+  top: 64px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.vector-toc {
+  font-size: calc(var(--font-size-base) * 0.88);
+  line-height: 1.4;
+}
+
+.vector-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  padding: 6px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-color-muted);
+}
+
+.vector-toc-contents {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vector-toc-item {
+  margin-bottom: 2px;
+}
+
+.vector-toc-link {
+  display: flex;
+  align-items: baseline;
+  padding: 4px 8px;
+  border-radius: 2px;
+  color: var(--color-base);
+  text-decoration: none !important;
+}
+
+.vector-toc-link:hover {
+  background-color: var(--background-color-interactive);
+  color: var(--color-progressive--hover);
+}
+
+.vector-toc-link.active {
+  color: var(--color-progressive);
+  font-weight: 700;
+  background-color: var(--background-color-interactive);
+}
+
+.vector-toc-numb {
+  color: var(--color-subtle);
+  margin-right: 6px;
+  font-feature-settings: "tnum";
+}
+
+/* ==========================================================================
+   WIKIPEDIA INFOBOX (CLASSIC & VECTOR 2022)
+   ========================================================================== */
+
+table.infobox {
+  border: 1px solid var(--border-color-base);
+  background-color: var(--background-color-neutral-subtle);
+  color: var(--color-base);
+  float: right;
+  clear: right;
+  margin: 0 0 1em 1.4em;
+  width: 22em;
+  font-size: calc(var(--font-size-base) * 0.88);
+  line-height: 1.5em;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+@media (max-width: 640px) {
+  table.infobox {
+    float: none;
+    width: 100%;
+    margin: 0 0 1em 0;
+  }
+}
+
+table.infobox th,
+table.infobox td {
+  padding: 0.35em 0.6em;
+  vertical-align: top;
+  border-top: 1px solid var(--border-color-muted);
+}
+
+table.infobox .infobox-above {
+  font-family: var(--font-family-serif);
+  font-size: 125%;
+  font-weight: bold;
+  text-align: center;
+  background-color: var(--background-color-interactive);
+  padding: 0.5em;
+  border-top: none;
+}
+
+table.infobox .infobox-subheader {
+  font-size: 90%;
+  font-weight: normal;
+  text-align: center;
+  color: var(--color-subtle);
+}
+
+table.infobox .infobox-image {
+  text-align: center;
+  padding: 0.5em;
+  background-color: var(--background-color-base);
+}
+
+table.infobox .infobox-caption {
+  font-size: 85%;
+  color: var(--color-subtle);
+  text-align: center;
+  padding-top: 0.3em;
+}
+
+table.infobox .infobox-label {
+  font-weight: bold;
+  text-align: left;
+  width: 35%;
+  color: var(--color-subtle);
+}
+
+table.infobox .infobox-data {
+  text-align: left;
+}
+
+/* ==========================================================================
+   WIKIPEDIA HEADINGS & CONTENT TYPOGRAPHY
+   ========================================================================== */
+
+.mw-parser-output {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-content);
+}
+
+.mw-parser-output h2 {
+  font-family: var(--font-family-serif);
+  font-size: calc(var(--font-size-base) * 1.5);
+  font-weight: normal;
+  border-bottom: 1px solid var(--border-color-base);
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+  padding-bottom: 0.2em;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.mw-parser-output h3 {
+  font-family: var(--font-family-serif);
+  font-size: calc(var(--font-size-base) * 1.2);
+  font-weight: bold;
+  margin-top: 1.4em;
+  margin-bottom: 0.3em;
+}
+
+.mw-parser-output p {
+  margin: 0.5em 0 1em;
+}
+
+.mw-parser-output ul {
+  margin: 0.3em 0 0.8em 1.6em;
+  padding: 0;
+}
+
+.mw-parser-output li {
+  margin-bottom: 0.25em;
+}
+
+/* Hatnote */
+.hatnote {
+  font-style: italic;
+  padding: 0.25em 0;
+  margin-bottom: 0.6em;
+  color: var(--color-subtle);
+  font-size: calc(var(--font-size-base) * 0.88);
+}
+
+/* Citation superscript */
+.reference {
+  font-size: 80%;
+  line-height: 1;
+  vertical-align: super;
+  padding: 0 1px;
+}
+
+.reference a {
+  color: var(--color-progressive);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.reference a:hover {
+  text-decoration: underline;
+}
+
+/* Reflist */
+.reflist {
+  font-size: calc(var(--font-size-base) * 0.88);
+  margin-bottom: 1em;
+}
+
+.reflist ol.references {
+  margin: 0.5em 0 0 2em;
+  padding: 0;
+  list-style-type: decimal;
+}
+
+.reflist ol.references li {
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
+/* Category box */
+#catlinks {
+  border: 1px solid var(--border-color-base);
+  background-color: var(--background-color-neutral-subtle);
+  padding: 6px 12px;
+  margin-top: 2em;
+  font-size: calc(var(--font-size-base) * 0.88);
+  clear: both;
+}
+
+/* Footer */
+.mw-footer {
+  border-top: 1px solid var(--border-color-subtle);
+  padding: 24px 16px 48px;
+  margin-top: 24px;
+  font-size: calc(var(--font-size-base) * 0.8);
+  color: var(--color-subtle);
+}
+
+.mw-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mw-footer li {
+  margin-bottom: 6px;
+}
+
+/* Edit link bracket */
+.mw-editsection {
+  font-family: var(--font-family-sans);
+  font-size: calc(var(--font-size-base) * 0.8);
+  font-weight: normal;
+  margin-left: 0.5rem;
+}
