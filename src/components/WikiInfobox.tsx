@@ -125,6 +125,18 @@ export const WikiInfobox: React.FC = () => {
           <tr>
             <th scope="row" className="infobox-label">Website</th>
             <td className="infobox-data">
+              {personalInfo.website && (
+                <div>
+                  <a
+                    href={personalInfo.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="external font-medium"
+                  >
+                    nizarberiane.dev
+                  </a>
+                </div>
+              )}
               <div>
                 <a
                   href={personalInfo.github}
@@ -153,6 +165,11 @@ export const WikiInfobox: React.FC = () => {
                   {personalInfo.email}
                 </a>
               </div>
+              {personalInfo.phone && (
+                <div className="text-[11px] text-[#54595d] dark:text-[#a2a9b1]">
+                  {personalInfo.phone}
+                </div>
+              )}
             </td>
           </tr>
         </tbody>
@@ -177,7 +194,7 @@ export const WikiInfobox: React.FC = () => {
               className="max-h-[75vh] w-auto mx-auto object-contain rounded"
             />
             <div className="p-2 text-center text-xs text-gray-700 dark:text-gray-300 font-serif">
-              Nizar Beriane – Full-stack Developer (Tangier, Morocco)
+              Nizar Beriane – Mobile Developer (Tangier, Morocco)
             </div>
           </div>
         </div>

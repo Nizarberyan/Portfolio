@@ -129,6 +129,13 @@ export const WikiFooter: React.FC = () => {
 
           {/* Portfolio Owner Places */}
           <ul id="footer-places" className="flex flex-wrap items-center gap-x-4 gap-y-2 list-none p-0 m-0 text-xs">
+            {personalInfo.website && (
+              <li>
+                <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="wiki-link font-medium">
+                  nizarberiane.dev
+                </a>
+              </li>
+            )}
             <li>
               <a href={`mailto:${personalInfo.email}`} className="wiki-link">
                 Contact: {personalInfo.email}

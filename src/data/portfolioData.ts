@@ -4,16 +4,17 @@ import { getWikiUrl } from './wikipediaLinks';
 export const personalInfo: PersonalInfo = {
   name: "Nizar Beriane",
   nativeName: "نزار بريان",
-  disambiguation: "full-stack developer",
+  disambiguation: "mobile developer",
   birthPlace: "Tangier",
   birthCountry: "Morocco",
-  occupation: "Full-stack developer",
+  occupation: "Mobile developer",
   education: "YouCode Morocco (UM6P), Advanced Full-Stack Development, 2024–2026",
   knownFor: [
+    "Cross-platform mobile apps (React Native & Flutter)",
     "Real-time & geolocation systems",
-    "AI/ML feature integration",
-    "Cross-platform mobile delivery",
-    "High-throughput backend design"
+    "Fluid UI animations (Reanimated & Skia)",
+    "On-device storage (SQLite & Drizzle ORM)",
+    "Full-stack TypeScript & Go backends"
   ],
   languages: [
     { language: "Arabic", proficiency: "Native" },
@@ -21,12 +22,14 @@ export const personalInfo: PersonalInfo = {
     { language: "French", proficiency: "Intermediate" }
   ],
   email: "nizarberiane@proton.me",
+  phone: "+212 628 204 623",
+  website: "https://nizarberiane.dev",
   github: "https://github.com/Nizarberyan",
   linkedin: "https://linkedin.com/in/nizar-beriane",
-  resumeUrl: "/Nizar_Beriane_Resume.pdf",
+  resumeUrl: "/Nizar_Beriane_Resume_Mobile.pdf",
   introLede: [
-    "Full-stack developer based in Tangier, Morocco, specializing in TypeScript, high-fidelity React Native applications, and scalable Node.js backends.",
-    "Known for owning products end-to-end — from real-time architecture and AI integration to shipping cross-platform mobile experiences — with a focus on measurable outcomes."
+    "Mobile developer based in Tangier, Morocco, specializing in cross-platform applications with React Native and Flutter, and the TypeScript backends behind them.",
+    "Shipped a real-time carpooling app to 500+ active users and a Flutter booking app used by 15+ local businesses. Experienced with real-time and geolocation features, interactive animations, and on-device data storage."
   ]
 };
 
@@ -35,16 +38,15 @@ export const careerExperience: CareerExperience[] = [
     role: "Mobile Developer Intern",
     company: "IzyDesk",
     companyWikiUrl: "https://izydesk.fr",
-    period: "May 2025 – Aug 2025",
+    period: "2025",
     location: "Tangier, Morocco",
-    summary: "IzyDesk is a custom enterprise software development agency focused on internal tools for B2B clients.",
+    summary: "IzyDesk is a custom enterprise software development agency focused on internal tools and digital solutions for B2B clients.",
     achievements: [
-      "Designed the backend for Resaly Pro, a salon management system, using Symfony and PostgreSQL, achieving sub-100ms scheduling response times.",
-      "Built the cross-platform mobile client in Flutter for automated scheduling and billing, boosting operational efficiency by 30%.",
-      "Developed analytical dashboards via a custom REST API, saving salon managers over 5 hours weekly on manual reporting.",
-      "Resaly Pro was adopted by 15+ local businesses."
+      "Built Resaly Pro, a salon management app now used by 15+ local businesses.",
+      "Wrote the real-time booking flow in Flutter on top of a Symfony REST API.",
+      "Tuned the Symfony workflows behind it, which raised team efficiency by 25%."
     ],
-    skills: ["Symfony", "PostgreSQL", "Flutter", "REST API", "Git"],
+    skills: ["Flutter", "Dart", "Symfony", "MySQL", "REST API", "Git"],
     citationId: 1
   }
 ];
@@ -55,14 +57,14 @@ export const educationList: EducationItem[] = [
     institution: "YouCode Morocco (UM6P)",
     institutionWikiUrl: getWikiUrl("UM6P"),
     partner: "Simplon.co",
-    period: "Sep 2024 – Apr 2026",
-    location: "Youssoufia, Morocco",
-    summary: "An intensive, project-based Software Engineering curriculum covering full-stack development, distributed architecture, and modern DevOps.",
+    period: "2024 – 2026",
+    location: "Tangier / Youssoufia, Morocco",
+    summary: "An intensive, project-based Software Engineering curriculum covering mobile application development, distributed architecture, and modern DevOps.",
     focusAreas: [
-      "Backend systems in Go and Node.js",
+      "Cross-platform mobile application development in React Native and Flutter",
+      "Backend systems in TypeScript, Node.js, and Go",
       "Distributed architecture and real-time messaging",
-      "Infrastructure management with Docker and CI/CD",
-      "Modern relational and NoSQL databases (PostgreSQL, MongoDB, Redis)"
+      "Modern relational and on-device databases (SQLite, PostgreSQL, MongoDB, Redis)"
     ],
     citationId: 2
   }
@@ -70,39 +72,51 @@ export const educationList: EducationItem[] = [
 
 export const skillCategories: SkillCategory[] = [
   {
-    category: "Backend",
+    category: "Mobile",
+    skills: [
+      { name: "React Native", wikiUrl: getWikiUrl("React Native"), description: "Cross-platform mobile framework for iOS and Android" },
+      { name: "Expo", wikiUrl: getWikiUrl("Expo"), description: "Ecosystem featuring Expo Router and EAS Build" },
+      { name: "Flutter", wikiUrl: getWikiUrl("Flutter"), description: "Multi-platform UI software development kit by Google" },
+      { name: "Reanimated", wikiUrl: getWikiUrl("Reanimated"), description: "60/120 FPS animations running directly on the mobile UI thread" },
+      { name: "Skia", wikiUrl: getWikiUrl("Skia"), description: "High-performance 2D vector graphics rendering engine" },
+      { name: "NativeWind", wikiUrl: getWikiUrl("NativeWind"), description: "Utility-first styling for React Native powered by Tailwind CSS" },
+      { name: "React Navigation", wikiUrl: getWikiUrl("React Navigation"), description: "Routing and navigation infrastructure for mobile apps" },
+      { name: "Redux", wikiUrl: getWikiUrl("Redux"), description: "Predictable state container for cross-screen state management" }
+    ]
+  },
+  {
+    category: "Languages",
+    skills: [
+      { name: "TypeScript", wikiUrl: getWikiUrl("TypeScript"), description: "Strict syntactical superset of JavaScript adding static typing" },
+      { name: "JavaScript", wikiUrl: getWikiUrl("JavaScript"), description: "Dynamic scripting language for mobile and web development" },
+      { name: "Dart", wikiUrl: getWikiUrl("Dart"), description: "Client-optimized object-oriented language behind Flutter" },
+      { name: "Go", wikiUrl: getWikiUrl("Go"), description: "Statically typed, compiled language designed for concurrency and scale" },
+      { name: "PHP", wikiUrl: getWikiUrl("PHP"), description: "Server scripting language for enterprise web platforms" }
+    ]
+  },
+  {
+    category: "Backend & Data",
     skills: [
       { name: "Node.js", wikiUrl: getWikiUrl("Node.js"), description: "Event-driven asynchronous JavaScript runtime" },
       { name: "NestJS", wikiUrl: getWikiUrl("NestJS"), description: "Progressive Node.js framework for scalable server-side applications" },
       { name: "Express", wikiUrl: getWikiUrl("Express"), description: "Minimalist web framework for Node.js" },
-      { name: "Go", wikiUrl: getWikiUrl("Go"), description: "Statically typed, compiled language designed for concurrency and scale" },
-      { name: "PHP", wikiUrl: getWikiUrl("PHP"), description: "General-purpose scripting language suited for web development" },
-      { name: "Laravel", wikiUrl: getWikiUrl("Laravel"), description: "PHP web framework with expressive syntax" },
+      { name: "Laravel", wikiUrl: getWikiUrl("Laravel"), description: "PHP web application framework with elegant syntax" },
+      { name: "Symfony", wikiUrl: getWikiUrl("Symfony"), description: "Decoupled PHP framework for high-performance enterprise APIs" },
       { name: "PostgreSQL", wikiUrl: getWikiUrl("PostgreSQL"), description: "Open-source object-relational database system" },
-      { name: "MongoDB", wikiUrl: getWikiUrl("MongoDB"), description: "Document-oriented NoSQL database system" }
+      { name: "MongoDB", wikiUrl: getWikiUrl("MongoDB"), description: "Document-oriented NoSQL database system" },
+      { name: "MySQL", wikiUrl: getWikiUrl("MySQL"), description: "Relational database management system" },
+      { name: "SQLite", wikiUrl: getWikiUrl("SQLite"), description: "Self-contained embedded SQL database for local on-device mobile storage" },
+      { name: "Drizzle", wikiUrl: getWikiUrl("Drizzle"), description: "Type-safe TypeScript ORM for on-device and backend databases" },
+      { name: "Prisma", wikiUrl: getWikiUrl("Prisma"), description: "Next-generation ORM for Node.js and TypeScript" },
+      { name: "Redis", wikiUrl: getWikiUrl("Redis"), description: "In-memory data structure store used as cache and message broker" }
     ]
   },
   {
-    category: "Frontend & Mobile",
+    category: "Tools & Infrastructure",
     skills: [
-      { name: "TypeScript", wikiUrl: getWikiUrl("TypeScript"), description: "Strict syntactical superset of JavaScript adding static typing" },
-      { name: "React", wikiUrl: getWikiUrl("React"), description: "Component-based declarative UI library" },
-      { name: "Next.js", wikiUrl: getWikiUrl("Next.js"), description: "React framework with server-side rendering and static site generation" },
-      { name: "React Native", wikiUrl: getWikiUrl("React Native"), description: "Framework for building cross-platform native applications" },
-      { name: "Flutter", wikiUrl: getWikiUrl("Flutter"), description: "Multi-platform UI software development kit by Google" },
-      { name: "Tailwind CSS", wikiUrl: getWikiUrl("Tailwind CSS"), description: "Utility-first CSS framework for web layout" },
-      { name: "Redux", wikiUrl: getWikiUrl("Redux"), description: "Predictable state container for JavaScript applications" }
-    ]
-  },
-  {
-    category: "Infrastructure",
-    skills: [
+      { name: "Git", wikiUrl: getWikiUrl("Git"), description: "Distributed version control system" },
       { name: "Docker", wikiUrl: getWikiUrl("Docker"), description: "Platform for containerizing and isolating applications" },
       { name: "Nginx", wikiUrl: getWikiUrl("Nginx"), description: "High-performance web server, reverse proxy, and load balancer" },
-      { name: "Redis", wikiUrl: getWikiUrl("Redis"), description: "In-memory data structure store used as cache and message broker" },
-      { name: "Prisma", wikiUrl: getWikiUrl("Prisma"), description: "Type-safe next-generation ORM for Node.js and TypeScript" },
-      { name: "SQLC", wikiUrl: getWikiUrl("SQLC"), description: "Compiles SQL queries into type-safe Go code" },
-      { name: "Git", wikiUrl: getWikiUrl("Git"), description: "Distributed version control system" },
       { name: "Linux", wikiUrl: getWikiUrl("Linux"), description: "Unix-like open-source operating system kernel" }
     ]
   }
@@ -112,72 +126,90 @@ export const projects: Project[] = [
   {
     id: "ridemate",
     title: "RideMate",
-    subtitle: "Sustainable Mobility Ecosystem",
+    subtitle: "Cross-Platform Real-Time Carpooling App (500+ Active Users)",
     year: "2026",
-    description: "A full-stack carpooling platform designed to reduce carbon emissions through real-time ridesharing, serving 500+ active users. Architected the backend with NestJS and PostgreSQL to handle complex geolocation matching and data synchronization, achieving 99.9% data consistency and reducing average wait times by 30%. Client interfaces built with React Native and Next.js, fully typed with TypeScript.",
+    description: "A cross-platform carpooling platform serving 500+ active users, engineered with a React Native mobile application and a Next.js web app. Features real-time geolocation matching that cut wait times by 30% with 99.9% data consistency during peak hours. Features interactive maps and location tracking, push notifications, secure token storage, multi-language internationalization (i18next), and EAS builds.",
     highlights: [
-      "Architected backend with NestJS and PostgreSQL for complex geolocation matching and data synchronization.",
-      "Achieved 99.9% data consistency during concurrent ride-matching peaks.",
-      "Reduced average passenger wait times by 30% through predictive dispatch logic.",
-      "Developed client interfaces with React Native and Next.js, fully typed in TypeScript."
+      "Designed and built a carpooling platform for 500+ active users, with a React Native app and a Next.js web app.",
+      "Built real-time geolocation matching that cut wait times by 30%, with 99.9% data consistency.",
+      "Added maps and location, push notifications, secure token storage, multi-language support (i18next), and EAS builds.",
+      "Architected the TypeScript backend with NestJS and PostgreSQL for concurrent rideshare synchronization."
     ],
-    techStack: ["TypeScript", "NestJS", "React Native", "Next.js", "PostgreSQL"],
+    techStack: ["React Native", "Expo", "TypeScript", "NestJS", "Next.js"],
     githubUrl: "https://github.com/Nizarberyan/ridemate",
     citationId: 3,
     featured: true,
-    category: "Full-Stack"
+    category: "Mobile"
+  },
+  {
+    id: "zephyr",
+    title: "Zephyr Mobile",
+    subtitle: "Animated Music Stats & Dashboard Mobile App",
+    year: "2025–2026",
+    description: "A React Native mobile analytics dashboard displaying top artists, albums, and tracks over customizable time ranges for a self-hosted music server. Features an animated, story-style Weekly Recap built with React Native Reanimated and Skia graphics, plus shareable visual cards. Optimized with local artwork caching and a data saver mode for slow mobile connections, backed by a Go (Fiber) and TimescaleDB service.",
+    highlights: [
+      "Built a dashboard of top artists, albums and tracks over different time ranges for a self-hosted music server.",
+      "Made an animated, story-style Weekly Recap with Reanimated and Skia, plus shareable cards.",
+      "Cached artwork from the user's own server and added a data saver mode for slow connections.",
+      "Wrote the Go (Fiber) and TimescaleDB backend with JWT authentication."
+    ],
+    techStack: ["React Native", "Expo Router", "Reanimated", "Skia", "Victory Native", "Go"],
+    githubUrl: "https://github.com/Nizarberyan/zephyr",
+    citationId: 6,
+    featured: true,
+    category: "Mobile"
+  },
+  {
+    id: "healthsphere",
+    title: "HealthSphere",
+    subtitle: "Offline-First Workout Tracker with SQLite & Drizzle ORM",
+    year: "2025–2026",
+    description: "A React Native workout logging mobile app engineered with Expo Router and NativeWind. Delivers workout tracking with list, add, detail, and delete screens, strict form validation, exercise type filters, dark mode, and smooth animations. Migrated on-device storage from AsyncStorage to SQLite with Drizzle ORM for robust offline-first persistence, with graceful loading and error states on launch.",
+    highlights: [
+      "Built workout logging with list, add, detail and delete screens, form validation, type filters, dark mode and animations.",
+      "Moved storage from AsyncStorage to SQLite with Drizzle ORM, with loading and error states on launch.",
+      "Combined stack, tab and drawer navigation into an intuitive mobile interface.",
+      "Started a NestJS backend in Docker for synchronization and API services."
+    ],
+    techStack: ["React Native", "Expo Router", "NativeWind", "SQLite", "Drizzle ORM", "NestJS"],
+    githubUrl: "https://github.com/Nizarberyan/healthsphere",
+    citationId: 7,
+    featured: true,
+    category: "Mobile"
   },
   {
     id: "lms-api",
     title: "LMS API",
-    subtitle: "EdTech Backend Architecture",
+    subtitle: "High-Throughput EdTech Backend Architecture",
     year: "2026",
-    description: "A modular Learning Management System backend handling 10,000+ concurrent requests, with sequential module progression logic optimized for sub-50ms response times. Reduced CI/CD pipeline overhead by 40%.",
+    description: "NestJS, MongoDB, and Docker backend for an e-learning platform, built for 10,000+ concurrent requests with sub-50ms responses and 40% less CI/CD pipeline overhead.",
     highlights: [
-      "Modular backend architecture engineered to handle 10,000+ concurrent requests.",
+      "Engineered modular backend architecture supporting 10,000+ concurrent requests.",
       "Sequential module progression logic optimized for sub-50ms response times.",
-      "Reduced CI/CD pipeline overhead by 40% through containerized build optimization."
+      "Reduced CI/CD pipeline overhead by 40% through containerized Docker workflows."
     ],
     techStack: ["Node.js", "NestJS", "MongoDB", "Docker"],
     githubUrl: "https://github.com/Nizarberyan/lms-api",
     citationId: 4,
-    featured: true,
+    featured: false,
     category: "Backend / Systems"
   },
   {
     id: "moneymind",
     title: "MoneyMind",
-    subtitle: "AI Financial SaaS",
+    subtitle: "AI Financial Analytics & Budgeting App",
     year: "2025",
-    description: "An intelligent budgeting assistant integrating Gemini AI for predictive expense analysis, achieving 92% accuracy in personalized financial insights, with a mobile-responsive interface.",
+    description: "Laravel budgeting app that uses Gemini AI to analyze spending, achieving 92% accuracy on personalized financial insights, with a responsive mobile-first interface.",
     highlights: [
-      "Integrated Gemini AI for predictive expense analysis and personalized financial insights.",
+      "Integrated Gemini AI for predictive expense analysis and personalized financial recommendations.",
       "Achieved 92% predictive accuracy across personalized user financial forecasts.",
       "Built mobile-responsive web interface using Laravel and Tailwind CSS."
     ],
     techStack: ["Laravel", "Gemini AI", "Tailwind CSS", "PHP"],
     githubUrl: "https://github.com/Nizarberyan/moneymind",
     citationId: 5,
-    featured: true,
+    featured: false,
     category: "AI / SaaS"
-  },
-  {
-    id: "zephyr",
-    title: "Zephyr",
-    subtitle: "High-Performance Scrobble Engine",
-    year: "2025–2026",
-    description: "A high-performance music scrobbling engine built in Go, architected to handle concurrent, time-series data processing at scale. Uses TimescaleDB for optimized data ingestion and SQLC for type-safe, high-performance queries, achieving sub-10ms query latency. Fully containerized with Docker. Paired with Zephyr Mobile, a companion client that reads audio metadata (including FLAC and Opus formats) and syncs it to the backend with battery-efficient background processing.",
-    highlights: [
-      "Built in Go and architected for concurrent, time-series data processing at scale.",
-      "Utilizes TimescaleDB for optimized data ingestion and SQLC for type-safe queries, achieving sub-10ms query latency.",
-      "Fully containerized with Docker.",
-      "Paired with Zephyr Mobile, a companion client reading audio metadata (including FLAC and Opus) with battery-efficient background syncing."
-    ],
-    techStack: ["Go", "TimescaleDB", "SQLC", "Docker", "React Native"],
-    githubUrl: "https://github.com/Nizarberyan/zephyr",
-    citationId: 6,
-    featured: true,
-    category: "Mobile & Audio"
   }
 ];
 
@@ -185,12 +217,12 @@ export const citations: Citation[] = [
   {
     id: 1,
     author: "IzyDesk Engineering",
-    title: "Resaly Pro: Salon Management System Backend & Mobile Client Deployment",
+    title: "Resaly Pro: Salon Management System Flutter Mobile Client & Backend Deployment",
     publisher: "IzyDesk Technical Documentation",
-    date: "August 2025",
+    date: "2025",
     url: "https://izydesk.fr",
-    accessDate: "2026-08-31",
-    quote: "Sub-100ms response times on Symfony and PostgreSQL backend with Flutter cross-platform client adopted by 15+ businesses.",
+    accessDate: "2026-10-15",
+    quote: "Flutter cross-platform client with real-time booking and Symfony REST API adopted by 15+ local businesses, raising team efficiency by 25%.",
     type: "article"
   },
   {
@@ -200,19 +232,19 @@ export const citations: Citation[] = [
     publisher: "YouCode Morocco & Simplon.co",
     date: "2024–2026",
     url: "https://youcode.ma",
-    accessDate: "2026-08-31",
-    quote: "Project-based Software Engineering curriculum covering Go, Node.js, distributed systems, and modern DevOps.",
+    accessDate: "2026-10-15",
+    quote: "Project-based Software Engineering curriculum covering mobile development, Go, Node.js, distributed systems, and DevOps.",
     type: "credential"
   },
   {
     id: 3,
     author: "Beriane, Nizar",
-    title: "RideMate: Real-Time Sustainable Mobility Ecosystem",
+    title: "RideMate: Real-Time Sustainable Mobility & Carpooling App",
     publisher: "GitHub Repository",
     date: "2026",
     url: "https://github.com/Nizarberyan/ridemate",
-    accessDate: "2026-08-31",
-    quote: "NestJS, PostgreSQL, React Native, Next.js, and TypeScript carpooling platform.",
+    accessDate: "2026-10-15",
+    quote: "React Native, Expo, TypeScript, NestJS, and Next.js carpooling app serving 500+ active users.",
     type: "repo"
   },
   {
@@ -222,7 +254,7 @@ export const citations: Citation[] = [
     publisher: "GitHub Repository",
     date: "2026",
     url: "https://github.com/Nizarberyan/lms-api",
-    accessDate: "2026-08-31",
+    accessDate: "2026-10-15",
     quote: "Node.js, NestJS, MongoDB, and Docker backend supporting 10,000+ concurrent requests with sub-50ms responses.",
     type: "repo"
   },
@@ -233,19 +265,30 @@ export const citations: Citation[] = [
     publisher: "GitHub Repository",
     date: "2025",
     url: "https://github.com/Nizarberyan/moneymind",
-    accessDate: "2026-08-31",
+    accessDate: "2026-10-15",
     quote: "Laravel, Gemini AI, and Tailwind CSS financial analytics assistant with 92% predictive accuracy.",
     type: "repo"
   },
   {
     id: 6,
     author: "Beriane, Nizar",
-    title: "Zephyr: Concurrent Time-Series Audio Scrobble Engine and Mobile Client",
+    title: "Zephyr Mobile: Animated Music Stats App with Reanimated and Skia",
     publisher: "GitHub Repository",
     date: "2025–2026",
     url: "https://github.com/Nizarberyan/zephyr",
-    accessDate: "2026-08-31",
-    quote: "Go, TimescaleDB, SQLC, Docker, and React Native companion app parsing FLAC and Opus formats.",
+    accessDate: "2026-10-15",
+    quote: "React Native, Expo Router, Reanimated, Skia, Victory Native, Go, and TimescaleDB music stats application.",
+    type: "repo"
+  },
+  {
+    id: 7,
+    author: "Beriane, Nizar",
+    title: "HealthSphere: Offline-First Workout Tracker with SQLite and Drizzle ORM",
+    publisher: "GitHub Repository",
+    date: "2025–2026",
+    url: "https://github.com/Nizarberyan/healthsphere",
+    accessDate: "2026-10-15",
+    quote: "React Native, Expo Router, NativeWind, SQLite, Drizzle ORM, and NestJS workout logging application.",
     type: "repo"
   }
 ];
@@ -254,16 +297,15 @@ export const sectionsList = [
   { id: "introduction", title: "Introduction", level: 1 },
   { id: "career", title: "Career", level: 1 },
   { id: "career-izydesk", title: "IzyDesk (2025)", level: 2 },
-  { id: "education", title: "Education", level: 1 },
-  { id: "technical-skills", title: "Technical skills", level: 1 },
-  { id: "backend-skills", title: "Backend", level: 2 },
-  { id: "frontend-skills", title: "Frontend & Mobile", level: 2 },
-  { id: "infra-skills", title: "Infrastructure", level: 2 },
   { id: "selected-works", title: "Selected works", level: 1 },
-  { id: "project-ridemate", title: "RideMate (2026)", level: 2 },
-  { id: "project-lms-api", title: "LMS API (2026)", level: 2 },
-  { id: "project-moneymind", title: "MoneyMind (2025)", level: 2 },
-  { id: "project-zephyr", title: "Zephyr (2025–2026)", level: 2 },
+  { id: "mobile-projects", title: "Mobile applications", level: 2 },
+  { id: "backend-projects", title: "Backend systems", level: 2 },
+  { id: "technical-skills", title: "Technical skills", level: 1 },
+  { id: "mobile-skills", title: "Mobile", level: 2 },
+  { id: "languages-skills", title: "Languages", level: 2 },
+  { id: "backend-skills", title: "Backend & data", level: 2 },
+  { id: "infra-skills", title: "Tools & infrastructure", level: 2 },
+  { id: "education", title: "Education", level: 1 },
   { id: "see-also", title: "See also", level: 1 },
   { id: "references", title: "References", level: 1 },
   { id: "external-links", title: "External links", level: 1 }

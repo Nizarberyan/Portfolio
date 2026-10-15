@@ -11,19 +11,27 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose }) =
 
   const revisions = [
     {
+      date: "October 2026",
+      time: "11:34",
+      user: "NizarBeriane (author)",
+      bytes: "+3,240",
+      summary: "Published HealthSphere offline-first workout tracker with SQLite & Drizzle ORM; refined portfolio focus on cross-platform mobile engineering (React Native & Flutter).",
+      tag: "cur"
+    },
+    {
       date: "August 2026",
       time: "12:53",
-      user: "NizarBeriane (author)",
+      user: "NizarBeriane",
       bytes: "+4,892",
-      summary: "Published RideMate, LMS API, Zephyr time-series engine, and updated technical skills architecture.",
-      tag: "cur"
+      summary: "Shipped RideMate carpooling app (500+ active users) and Zephyr Mobile audio stats dashboard with Reanimated & Skia.",
+      tag: "prev"
     },
     {
       date: "August 2025",
       time: "17:00",
       user: "IzyDeskEng",
       bytes: "+2,140",
-      summary: "Completed Mobile Developer Internship; deployed Resaly Pro backend & Flutter client with sub-100ms response metrics.",
+      summary: "Completed Mobile Developer Internship; deployed Resaly Pro Flutter booking app for 15+ businesses, raising efficiency by 25%.",
       tag: "prev"
     },
     {
@@ -39,7 +47,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose }) =
       time: "08:30",
       user: "YouCodeUM6P",
       bytes: "+3,100",
-      summary: "Enrolled in Advanced Full-Stack Development Program at YouCode Morocco (UM6P) & Simplon.co.",
+      summary: "Enrolled in Software Engineering Program at YouCode Morocco (UM6P) & Simplon.co.",
       tag: "prev"
     }
   ];

@@ -12,7 +12,7 @@ import { ProjectCard } from './ProjectCard';
 import { ReferencesSection } from './ReferencesSection';
 import { TableOfContents } from './TableOfContents';
 import { WikiInfobox } from './WikiInfobox';
-import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronsUpDown, Smartphone, Server } from 'lucide-react';
 
 interface ArticleBodyProps {
   searchQuery: string;
@@ -33,6 +33,8 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
     'references': false,
     'external-links': false,
   });
+
+  const [activeFilter, setActiveFilter] = useState<'all' | 'mobile' | 'backend'>('all');
 
   const toggleSection = (sectionId: string) => {
     setCollapsedSections(prev => ({
@@ -59,9 +61,20 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
           setCollapsedSections(prev => ({ ...prev, career: false }));
         } else if (['education'].includes(hash)) {
           setCollapsedSections(prev => ({ ...prev, education: false }));
-        } else if (['technical-skills', 'backend-skills', 'frontend-skills', 'infra-skills'].includes(hash)) {
+        } else if (['technical-skills', 'mobile-skills', 'languages-skills', 'backend-skills', 'infra-skills'].includes(hash)) {
           setCollapsedSections(prev => ({ ...prev, 'technical-skills': false }));
-        } else if (['selected-works', 'project-ridemate', 'project-lms-api', 'project-moneymind', 'project-zephyr'].includes(hash)) {
+        } else if ([
+          'selected-works', 
+          'mobile-projects', 
+          'mobile-projects-heading', 
+          'project-ridemate', 
+          'project-zephyr', 
+          'project-healthsphere', 
+          'backend-projects', 
+          'backend-projects-heading', 
+          'project-lms-api', 
+          'project-moneymind'
+        ].includes(hash)) {
           setCollapsedSections(prev => ({ ...prev, 'selected-works': false }));
         } else if (['see-also'].includes(hash)) {
           setCollapsedSections(prev => ({ ...prev, 'see-also': false }));
@@ -78,6 +91,9 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
   }, []);
 
   const filteredProjects = projects.filter((project) => {
+    if (activeFilter === 'mobile' && project.category !== 'Mobile') return false;
+    if (activeFilter === 'backend' && project.category === 'Mobile') return false;
+
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -88,6 +104,9 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
       project.category.toLowerCase().includes(query)
     );
   });
+
+  const mobileProjects = filteredProjects.filter((p) => p.category === 'Mobile');
+  const backendProjects = filteredProjects.filter((p) => p.category !== 'Mobile');
 
   return (
     <div className="mw-body">
@@ -100,7 +119,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
             </span>
           </h1>
           <div className="text-xs text-[#54595d] dark:text-[#a2a9b1] font-sans mt-0.5">
-            <span>(full-stack developer)</span>
+            <span>({personalInfo.disambiguation})</span>
           </div>
         </div>
       </header>
@@ -143,7 +162,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
           <div className="mw-parser-output">
             {/* Hatnote */}
             <div className="hatnote navigation-not-searchable text-xs" role="note">
-              This article is about the full-stack developer. For other uses, see{' '}
+              This article is about the mobile developer. For other uses, see{' '}
               <a
                 href="https://en.wikipedia.org/wiki/Nizar"
                 target="_blank"
@@ -168,28 +187,40 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
               <a href={getWikiUrl("Morocco")} target="_blank" rel="noopener noreferrer" className="wiki-link">
                 Morocco
               </a>
-              ) is a Moroccan full-stack developer specializing in{' '}
-              <a href={getWikiUrl("TypeScript")} target="_blank" rel="noopener noreferrer" className="wiki-link">
-                TypeScript
-              </a>
-              , high-fidelity{' '}
+              ) is a Moroccan mobile developer who builds cross-platform applications in{' '}
               <a href={getWikiUrl("React Native")} target="_blank" rel="noopener noreferrer" className="wiki-link">
                 React Native
               </a>{' '}
-              applications, and scalable{' '}
-              <a href={getWikiUrl("Node.js")} target="_blank" rel="noopener noreferrer" className="wiki-link">
-                Node.js
+              and{' '}
+              <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                Flutter
+              </a>
+              , as well as the{' '}
+              <a href={getWikiUrl("TypeScript")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                TypeScript
               </a>{' '}
-              backends.
+              backends behind them.
               <ReferencePopover id={1} />
             </p>
 
             <p>
-              He is known for owning digital products end-to-end — from real-time distributed architecture and{' '}
-              <a href={getWikiUrl("Artificial intelligence")} target="_blank" rel="noopener noreferrer" className="wiki-link">
-                AI integration
+              He has shipped a real-time carpooling application to 500+ active users and a Flutter booking client adopted by 15+ local businesses. He is experienced with real-time and geolocation features, interactive animations using{' '}
+              <a href={getWikiUrl("Reanimated")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                Reanimated
               </a>{' '}
-              to shipping cross-platform mobile experiences — with a focus on measurable outcomes.
+              and{' '}
+              <a href={getWikiUrl("Skia")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                Skia
+              </a>
+              , and offline-first on-device data storage using{' '}
+              <a href={getWikiUrl("SQLite")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                SQLite
+              </a>{' '}
+              and{' '}
+              <a href={getWikiUrl("Drizzle ORM")} target="_blank" rel="noopener noreferrer" className="wiki-link">
+                Drizzle ORM
+              </a>
+              .
               <ReferencePopover id={2} />
             </p>
 
@@ -262,14 +293,151 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                         >
                           IzyDesk
                         </a>{' '}
-                        (<a href="https://izydesk.fr" target="_blank" rel="noopener noreferrer" className="wiki-link font-mono text-sm">izydesk.fr</a>) is a custom enterprise software development agency focused on internal tools for B2B clients. During this internship, designed the backend for Resaly Pro, a salon management system, using{' '}
-                        <a href={getWikiUrl("Symfony")} target="_blank" rel="noopener noreferrer" className="wiki-link">Symfony</a> and{' '}
-                        <a href={getWikiUrl("PostgreSQL")} target="_blank" rel="noopener noreferrer" className="wiki-link">PostgreSQL</a>, achieving sub-100ms scheduling response times. Built the cross-platform mobile client in{' '}
-                        <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">Flutter</a> for automated scheduling and billing, boosting operational efficiency by 30%. Developed analytical dashboards via a custom{' '}
-                        <a href={getWikiUrl("REST API")} target="_blank" rel="noopener noreferrer" className="wiki-link">REST API</a>, saving salon managers over 5 hours weekly on manual reporting. Resaly Pro was adopted by 15+ local businesses.
+                        (<a href="https://izydesk.fr" target="_blank" rel="noopener noreferrer" className="wiki-link font-mono text-sm">izydesk.fr</a>) is a custom enterprise software development agency focused on internal tools and digital systems for B2B clients. In 2025, Beriane worked as a Mobile Developer Intern, where he built Resaly Pro, a salon management application now deployed and used by 15+ local businesses. He wrote the real-time appointment booking flow in{' '}
+                        <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">Flutter</a> on top of a{' '}
+                        <a href={getWikiUrl("Symfony")} target="_blank" rel="noopener noreferrer" className="wiki-link">Symfony</a>{' '}
+                        <a href={getWikiUrl("REST API")} target="_blank" rel="noopener noreferrer" className="wiki-link">REST API</a> and{' '}
+                        <a href={getWikiUrl("MySQL")} target="_blank" rel="noopener noreferrer" className="wiki-link">MySQL</a> database, and tuned the backend workflows behind it, raising team efficiency by 25%.
                       </p>
                     </div>
                   ))}
+                </div>
+              )}
+            </section>
+
+            {/* Selected Works */}
+            <section id="selected-works" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('selected-works')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Selected works</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['selected-works'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
+              </h2>
+
+              {!collapsedSections['selected-works'] && (
+                <div className="section-content space-y-4">
+                  {/* Category Filter Buttons */}
+                  <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-wiki-lightBorderSubtle dark:border-wiki-darkBorderSubtle not-prose">
+                    <span className="text-xs text-gray-500 font-sans mr-1">Filter projects:</span>
+                    <button
+                      onClick={() => setActiveFilter('all')}
+                      className={`px-2.5 py-1 text-xs rounded-xs font-mono transition cursor-pointer ${
+                        activeFilter === 'all'
+                          ? 'bg-[#3366cc] text-white'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      All ({projects.length})
+                    </button>
+                    <button
+                      onClick={() => setActiveFilter('mobile')}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-xs font-mono transition cursor-pointer ${
+                        activeFilter === 'mobile'
+                          ? 'bg-[#3366cc] text-white'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <Smartphone className="w-3 h-3" />
+                      Mobile ({projects.filter(p => p.category === 'Mobile').length})
+                    </button>
+                    <button
+                      onClick={() => setActiveFilter('backend')}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-xs font-mono transition cursor-pointer ${
+                        activeFilter === 'backend'
+                          ? 'bg-[#3366cc] text-white'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <Server className="w-3 h-3" />
+                      Backend & AI ({projects.filter(p => p.category !== 'Mobile').length})
+                    </button>
+                  </div>
+
+                  {/* Mobile Projects Sub-section */}
+                  {mobileProjects.length > 0 && (
+                    <div id="mobile-projects" className="pt-2">
+                      <h3 id="mobile-projects-heading" className="text-lg font-serif font-bold text-wiki-lightText dark:text-wiki-darkText mb-2 pb-1 border-b border-gray-200 dark:border-gray-700">
+                        Mobile applications
+                      </h3>
+                      <div className="space-y-4">
+                        {mobileProjects.map((project) => (
+                          <ProjectCard key={project.id} project={project} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Backend Projects Sub-section */}
+                  {backendProjects.length > 0 && (
+                    <div id="backend-projects" className="pt-4">
+                      <h3 id="backend-projects-heading" className="text-lg font-serif font-bold text-wiki-lightText dark:text-wiki-darkText mb-2 pb-1 border-b border-gray-200 dark:border-gray-700">
+                        Backend & systems
+                      </h3>
+                      <div className="space-y-4">
+                        {backendProjects.map((project) => (
+                          <ProjectCard key={project.id} project={project} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {filteredProjects.length === 0 && (
+                    <p className="text-sm italic text-gray-500 py-4">
+                      No projects matching your search query.
+                    </p>
+                  )}
+                </div>
+              )}
+            </section>
+
+            {/* Technical Skills */}
+            <section id="technical-skills" className="scroll-mt-14">
+              <h2
+                onClick={() => toggleSection('technical-skills')}
+                className="mobile-collapsible"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="mw-headline">Technical skills</span>
+                  <span className="md:hidden text-gray-400">
+                    {collapsedSections['technical-skills'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                  </span>
+                </span>
+              </h2>
+
+              {!collapsedSections['technical-skills'] && (
+                <div className="section-content">
+                  <ul className="space-y-1.5">
+                    {skillCategories.map((cat, idx) => {
+                      const sectionId = 
+                        cat.category === 'Mobile' ? 'mobile-skills' :
+                        cat.category === 'Languages' ? 'languages-skills' :
+                        cat.category.includes('Backend') ? 'backend-skills' : 'infra-skills';
+                      return (
+                        <li key={idx} id={sectionId}>
+                          <strong>{cat.category}: </strong>
+                          {cat.skills.map((skill, sIdx) => (
+                            <React.Fragment key={skill.name}>
+                              <a
+                                href={skill.wikiUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="wiki-link"
+                                title={`${skill.name} – Wikipedia`}
+                              >
+                                {skill.name}
+                              </a>
+                              {sIdx < cat.skills.length - 1 && <span>, </span>}
+                            </React.Fragment>
+                          ))}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               )}
             </section>
@@ -316,77 +484,17 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                         <ReferencePopover id={edu.citationId} />
                       </h3>
                       <p>
-                        {edu.summary} Focus areas included backend systems in{' '}
-                        <a href={getWikiUrl("Go")} target="_blank" rel="noopener noreferrer" className="wiki-link">Go</a> and{' '}
-                        <a href={getWikiUrl("Node.js")} target="_blank" rel="noopener noreferrer" className="wiki-link">Node.js</a>, and infrastructure management with{' '}
+                        {edu.summary} Key curriculum areas included cross-platform mobile delivery with{' '}
+                        <a href={getWikiUrl("React Native")} target="_blank" rel="noopener noreferrer" className="wiki-link">React Native</a> and{' '}
+                        <a href={getWikiUrl("Flutter")} target="_blank" rel="noopener noreferrer" className="wiki-link">Flutter</a>, backend architectures in{' '}
+                        <a href={getWikiUrl("TypeScript")} target="_blank" rel="noopener noreferrer" className="wiki-link">TypeScript</a>,{' '}
+                        <a href={getWikiUrl("Node.js")} target="_blank" rel="noopener noreferrer" className="wiki-link">Node.js</a> and{' '}
+                        <a href={getWikiUrl("Go")} target="_blank" rel="noopener noreferrer" className="wiki-link">Go</a>, on-device data modeling with{' '}
+                        <a href={getWikiUrl("SQLite")} target="_blank" rel="noopener noreferrer" className="wiki-link">SQLite</a>, and containerization with{' '}
                         <a href={getWikiUrl("Docker")} target="_blank" rel="noopener noreferrer" className="wiki-link">Docker</a> and{' '}
                         <a href={getWikiUrl("CI/CD")} target="_blank" rel="noopener noreferrer" className="wiki-link">CI/CD</a>.
                       </p>
                     </div>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            {/* Technical Skills */}
-            <section id="technical-skills" className="scroll-mt-14">
-              <h2
-                onClick={() => toggleSection('technical-skills')}
-                className="mobile-collapsible"
-              >
-                <span className="flex items-center gap-2">
-                  <span className="mw-headline">Technical skills</span>
-                  <span className="md:hidden text-gray-400">
-                    {collapsedSections['technical-skills'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-                  </span>
-                </span>
-              </h2>
-
-              {!collapsedSections['technical-skills'] && (
-                <div className="section-content">
-                  <ul className="space-y-1">
-                    {skillCategories.map((cat, idx) => (
-                      <li key={idx} id={cat.category === 'Backend' ? 'backend-skills' : cat.category.includes('Frontend') ? 'frontend-skills' : 'infra-skills'}>
-                        <strong>{cat.category}: </strong>
-                        {cat.skills.map((skill, sIdx) => (
-                          <React.Fragment key={skill.name}>
-                            <a
-                              href={skill.wikiUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="wiki-link"
-                              title={`${skill.name} – Wikipedia`}
-                            >
-                              {skill.name}
-                            </a>
-                            {sIdx < cat.skills.length - 1 && <span>, </span>}
-                          </React.Fragment>
-                        ))}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </section>
-
-            {/* Selected Works */}
-            <section id="selected-works" className="scroll-mt-14">
-              <h2
-                onClick={() => toggleSection('selected-works')}
-                className="mobile-collapsible"
-              >
-                <span className="flex items-center gap-2">
-                  <span className="mw-headline">Selected works</span>
-                  <span className="md:hidden text-gray-400">
-                    {collapsedSections['selected-works'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-                  </span>
-                </span>
-              </h2>
-
-              {!collapsedSections['selected-works'] && (
-                <div className="section-content space-y-4">
-                  {filteredProjects.map((project) => (
-                    <ProjectCard key={project.id} project={project} />
                   ))}
                 </div>
               )}
@@ -409,14 +517,26 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
               {!collapsedSections['see-also'] && (
                 <div className="section-content">
                   <ul>
+                    {personalInfo.website && (
+                      <li>
+                        <a
+                          href={personalInfo.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="external font-medium"
+                        >
+                          Personal Website: nizarberiane.dev
+                        </a>
+                      </li>
+                    )}
                     <li>
                       <a
                         href={personalInfo.resumeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="external"
+                        className="external font-medium"
                       >
-                        Curriculum Vitae (PDF)
+                        Curriculum Vitae – Mobile Developer (PDF)
                       </a>
                     </li>
                     <li>
@@ -482,6 +602,18 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
               {!collapsedSections['external-links'] && (
                 <div className="section-content">
                   <ul>
+                    {personalInfo.website && (
+                      <li>
+                        <a
+                          href={personalInfo.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="external font-medium"
+                        >
+                          Official website: nizarberiane.dev
+                        </a>
+                      </li>
+                    )}
                     <li>
                       <a
                         href={personalInfo.github}
@@ -510,6 +642,11 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                         Electronic mail: {personalInfo.email}
                       </a>
                     </li>
+                    {personalInfo.phone && (
+                      <li className="text-gray-700 dark:text-gray-300">
+                        Telephone: {personalInfo.phone}
+                      </li>
+                    )}
                   </ul>
                 </div>
               )}
@@ -524,15 +661,15 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({
                   <li>|</li>
                   <li><a href="https://en.wikipedia.org/wiki/Category:Moroccan_software_engineers" className="wiki-link">Moroccan software engineers</a></li>
                   <li>|</li>
-                  <li><a href="https://en.wikipedia.org/wiki/Category:Full-stack_developers" className="wiki-link">Full-stack developers</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Category:Mobile_developers" className="wiki-link">Mobile developers</a></li>
+                  <li>|</li>
+                  <li><a href="https://en.wikipedia.org/wiki/Category:React_Native_developers" className="wiki-link">React Native developers</a></li>
                   <li>|</li>
                   <li><a href="https://en.wikipedia.org/wiki/Category:People_from_Tangier" className="wiki-link">People from Tangier</a></li>
                   <li>|</li>
                   <li><a href="https://en.wikipedia.org/wiki/Category:TypeScript_programmers" className="wiki-link">TypeScript programmers</a></li>
                   <li>|</li>
-                  <li><a href="https://en.wikipedia.org/wiki/Category:Go_programmers" className="wiki-link">Go programmers</a></li>
-                  <li>|</li>
-                  <li><a href="https://en.wikipedia.org/wiki/Category:React_Native_developers" className="wiki-link">React Native developers</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Category:Dart_(programming_language)_programmers" className="wiki-link">Dart programmers</a></li>
                 </ul>
               </div>
             </div>

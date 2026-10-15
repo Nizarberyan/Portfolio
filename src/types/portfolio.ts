@@ -10,7 +10,7 @@ export interface Project {
   githubUrl?: string;
   citationId: number;
   featured?: boolean;
-  category: 'Full-Stack' | 'Backend / Systems' | 'AI / SaaS' | 'Mobile & Audio';
+  category: 'Mobile' | 'Backend / Systems' | 'AI / SaaS' | 'Full-Stack' | 'Mobile & Audio';
 }
 
 export interface CareerExperience {
@@ -70,6 +70,8 @@ export interface PersonalInfo {
   knownFor: string[];
   languages: { language: string; proficiency: string }[];
   email: string;
+  phone?: string;
+  website?: string;
   github: string;
   linkedin: string;
   resumeUrl: string;

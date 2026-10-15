@@ -5,7 +5,7 @@ import { ArticleBody } from './components/ArticleBody';
 import { WikiFooter } from './components/WikiFooter';
 import { HistoryModal } from './components/HistoryModal';
 import { personalInfo } from './data/portfolioData';
-import { X, List, FileText, Github, Linkedin, Mail, History } from 'lucide-react';
+import { X, List, FileText, Github, Linkedin, Mail, History, Globe } from 'lucide-react';
 
 export function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -151,6 +151,17 @@ export function App() {
 
             {/* Quick Links */}
             <div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#202122] space-y-1 text-xs">
+              {personalInfo.website && (
+                <a
+                  href={personalInfo.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-[#202122] dark:text-[#eaecf0]"
+                >
+                  <Globe className="w-4 h-4 text-[#3366cc] dark:text-[#6ea8fe]" />
+                  <span className="font-medium">Website: nizarberiane.dev</span>
+                </a>
+              )}
               <a
                 href={personalInfo.resumeUrl}
                 target="_blank"

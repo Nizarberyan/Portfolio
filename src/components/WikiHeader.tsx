@@ -32,12 +32,15 @@ export const WikiHeader: React.FC<WikiHeaderProps> = ({
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
 
   const suggestions = [
-    { label: 'TypeScript', type: 'Skill', sectionId: 'technical-skills' },
-    { label: 'Go & TimescaleDB', type: 'Architecture', sectionId: 'project-zephyr' },
-    { label: 'RideMate', type: 'Project', sectionId: 'project-ridemate' },
-    { label: 'LMS API (NestJS)', type: 'Project', sectionId: 'project-lms-api' },
-    { label: 'MoneyMind (Gemini AI)', type: 'Project', sectionId: 'project-moneymind' },
-    { label: 'IzyDesk Experience', type: 'Career', sectionId: 'career-izydesk' },
+    { label: 'React Native & Flutter', type: 'Mobile Skill', sectionId: 'mobile-skills' },
+    { label: 'RideMate (Carpooling App)', type: 'Mobile Project', sectionId: 'project-ridemate' },
+    { label: 'Zephyr Mobile (Music Stats)', type: 'Mobile Project', sectionId: 'project-zephyr' },
+    { label: 'HealthSphere (Workout Tracker)', type: 'Mobile Project', sectionId: 'project-healthsphere' },
+    { label: 'Reanimated & Skia', type: 'Mobile UI', sectionId: 'project-zephyr' },
+    { label: 'SQLite & Drizzle ORM', type: 'Mobile Storage', sectionId: 'project-healthsphere' },
+    { label: 'IzyDesk (Resaly Pro Flutter)', type: 'Experience', sectionId: 'career-izydesk' },
+    { label: 'LMS API (NestJS)', type: 'Backend', sectionId: 'project-lms-api' },
+    { label: 'MoneyMind (Gemini AI)', type: 'AI Project', sectionId: 'project-moneymind' },
     { label: 'YouCode Morocco (UM6P)', type: 'Education', sectionId: 'education' },
   ].filter(s => searchQuery ? s.label.toLowerCase().includes(searchQuery.toLowerCase()) : true);
 

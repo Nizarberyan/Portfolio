@@ -43,7 +43,22 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ variant = 'inl
     }, 50);
   };
 
-  const topLevelSections = sectionsList.filter(s => s.level === 1 && s.id !== 'introduction');
+  const numberedSections = React.useMemo(() => {
+    let top = 0;
+    let sub = 0;
+    return sectionsList
+      .filter(s => s.id !== 'introduction')
+      .map(s => {
+        if (s.level === 1) {
+          top++;
+          sub = 0;
+          return { ...s, number: `${top}` };
+        } else {
+          sub++;
+          return { ...s, number: `${top}.${sub}` };
+        }
+      });
+  }, []);
 
   if (variant === 'sidebar') {
     return (
@@ -71,16 +86,17 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ variant = 'inl
                 </a>
               </li>
 
-              {topLevelSections.map((sec, idx) => {
+              {numberedSections.map((sec) => {
                 const isActive = activeSection === sec.id;
+                const isLevel2 = sec.level === 2;
                 return (
-                  <li key={sec.id} className="vector-toc-item">
+                  <li key={sec.id} className={`vector-toc-item ${isLevel2 ? 'vector-toc-level-2' : ''}`}>
                     <a
                       href={`#${sec.id}`}
                       onClick={(e) => handleLinkClick(e, sec.id)}
-                      className={`vector-toc-link ${isActive ? 'active' : ''}`}
+                      className={`vector-toc-link ${isLevel2 ? 'pl-5 text-xs text-gray-600 dark:text-gray-400' : ''} ${isActive ? 'active' : ''}`}
                     >
-                      <span className="vector-toc-numb">{idx + 1}</span>
+                      <span className="vector-toc-numb text-[11px]">{sec.number}</span>
                       <span className="vector-toc-text">{sec.title}</span>
                     </a>
                   </li>
@@ -113,18 +129,21 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ variant = 'inl
               <span className="text-[#54595d] dark:text-[#a2a9b1] mr-1.5 font-mono">(Top)</span>
             </a>
           </li>
-          {topLevelSections.map((sec, idx) => (
-            <li key={sec.id}>
-              <a
-                href={`#${sec.id}`}
-                onClick={(e) => handleLinkClick(e, sec.id)}
-                className="wiki-link"
-              >
-                <span className="text-[#54595d] dark:text-[#a2a9b1] mr-1.5 font-mono">{idx + 1}</span>
-                <span>{sec.title}</span>
-              </a>
-            </li>
-          ))}
+          {numberedSections.map((sec) => {
+            const isLevel2 = sec.level === 2;
+            return (
+              <li key={sec.id} className={isLevel2 ? 'ml-3.5 text-[11px]' : ''}>
+                <a
+                  href={`#${sec.id}`}
+                  onClick={(e) => handleLinkClick(e, sec.id)}
+                  className="wiki-link"
+                >
+                  <span className="text-[#54595d] dark:text-[#a2a9b1] mr-1.5 font-mono">{sec.number}</span>
+                  <span>{sec.title}</span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

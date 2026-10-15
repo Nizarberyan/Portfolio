@@ -14,7 +14,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       className="my-6 pb-6 border-b border-wiki-lightBorderSubtle dark:border-wiki-darkBorderSubtle last:border-b-0"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1.5">
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2 flex-wrap">
           <h3 className="text-xl font-bold font-serif text-wiki-lightText dark:text-wiki-darkText">
             {project.title}
           </h3>
@@ -22,6 +22,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             ({project.year})
           </span>
           <ReferencePopover id={project.citationId} />
+          {project.category === 'Mobile' && (
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-xs bg-[#eaf3ff] dark:bg-[#1a2d48] text-[#3366cc] dark:text-[#6ea8fe] border border-[#a2b9e1] dark:border-[#2a4d7d]">
+              Mobile
+            </span>
+          )}
         </div>
 
         {/* Wikipedia styled action links */}
