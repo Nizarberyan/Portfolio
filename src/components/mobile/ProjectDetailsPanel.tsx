@@ -13,7 +13,12 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
   const isBlackTextTheme = project.id === 'ridemate' || project.id === 'healthsphere';
 
   return (
-    <div className={`flex-1 space-y-7 animate-fadeIn ${project.themeStyle.themeClass}`}>
+    <div 
+      id={`project-panel-${project.id}`}
+      role="tabpanel"
+      aria-label={`Détails du projet ${project.name}`}
+      className={`flex-1 space-y-7 animate-fadeIn ${project.themeStyle.themeClass}`}
+    >
       {/* Editorial Category & Year Kicker */}
       <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono uppercase tracking-widest font-semibold">
         <span style={{ color: project.themeStyle.accentHex }}>{project.category}</span>
@@ -46,14 +51,14 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
               href={project.frontendGithubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all shadow-md active:scale-95 ${
+              className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
                 isBlackTextTheme
                   ? project.id === 'ridemate'
-                    ? 'bg-[#c2f019] hover:bg-[#b0dc12] text-black font-extrabold shadow-[#c2f019]/25'
-                    : 'bg-[#FF99CC] hover:bg-[#ff80be] text-black font-extrabold shadow-[#FF99CC]/25'
+                    ? 'bg-[#c2f019] hover:bg-[#b0dc12] text-black font-extrabold shadow-[#c2f019]/25 focus-visible:ring-[#c2f019]'
+                    : 'bg-[#FF99CC] hover:bg-[#ff80be] text-black font-extrabold shadow-[#FF99CC]/25 focus-visible:ring-[#FF99CC]'
                   : project.id === 'resaly'
-                    ? 'bg-[#c65318] hover:bg-[#ad4510] text-white font-bold shadow-[#c65318]/25'
-                    : 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-indigo-950/40'
+                    ? 'bg-[#c65318] hover:bg-[#ad4510] text-white font-bold shadow-[#c65318]/25 focus-visible:ring-[#c65318]'
+                    : 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-indigo-950/40 focus-visible:ring-indigo-500'
               }`}
             >
               <Github className={`w-4 h-4 ${isBlackTextTheme ? 'text-black' : 'text-white'}`} />
@@ -67,10 +72,10 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
               href={project.backendGithubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 ${
+              className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
                 isLight
-                  ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm'
-                  : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold'
+                  ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm focus-visible:ring-[#de854f]'
+                  : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold focus-visible:ring-white/60'
               }`}
             >
               <Github className="w-4 h-4 text-current" />
@@ -83,14 +88,14 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2.5 px-6 py-3.5 text-xs rounded-xl transition-all shadow-md active:scale-95 ${
+            className={`inline-flex items-center gap-2.5 px-6 py-3.5 text-xs rounded-xl transition-all shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
               isBlackTextTheme
                 ? project.id === 'ridemate'
-                  ? 'bg-[#c2f019] hover:bg-[#b0dc12] text-black font-extrabold shadow-[#c2f019]/25'
-                  : 'bg-[#FF99CC] hover:bg-[#ff80be] text-black font-extrabold shadow-[#FF99CC]/25'
+                  ? 'bg-[#c2f019] hover:bg-[#b0dc12] text-black font-extrabold shadow-[#c2f019]/25 focus-visible:ring-[#c2f019]'
+                  : 'bg-[#FF99CC] hover:bg-[#ff80be] text-black font-extrabold shadow-[#FF99CC]/25 focus-visible:ring-[#FF99CC]'
                 : project.id === 'resaly'
-                  ? 'bg-[#c65318] hover:bg-[#ad4510] text-white font-bold shadow-[#c65318]/25'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-indigo-950/40'
+                  ? 'bg-[#c65318] hover:bg-[#ad4510] text-white font-bold shadow-[#c65318]/25 focus-visible:ring-[#c65318]'
+                  : 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-indigo-950/40 focus-visible:ring-indigo-500'
             }`}
           >
             <Github className={`w-4 h-4 ${isBlackTextTheme ? 'text-black' : 'text-white'}`} />
@@ -106,10 +111,10 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
             href={project.videoShareUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 ${
+            className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
               isLight
-                ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm'
-                : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold'
+                ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm focus-visible:ring-[#de854f]'
+                : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold focus-visible:ring-white/60'
             }`}
           >
             <Play className="w-3.5 h-3.5 fill-current" />
@@ -123,10 +128,10 @@ export const ProjectDetailsPanel: React.FC<Props> = memo(({ project }) => {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 ${
+            className={`inline-flex items-center gap-2 px-5 py-3 text-xs rounded-xl transition-all border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
               isLight
-                ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm'
-                : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold'
+                ? 'bg-white hover:bg-[#faefe8] text-[#8c370b] border-2 border-[#de854f]/35 font-bold shadow-sm focus-visible:ring-[#de854f]'
+                : 'bg-white/10 hover:bg-white/20 text-white border-white/20 font-bold focus-visible:ring-white/60'
             }`}
           >
             <ExternalLink className="w-3.5 h-3.5" />

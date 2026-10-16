@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from 'react';
+import React, { useState, memo, useEffect, useRef } from 'react';
 import type { ProjectTheme } from '../../data/mobileThemeConfig';
 import { 
   Wifi, Battery, Play, ChevronLeft, ChevronRight, Activity, 
@@ -32,6 +32,7 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
   const isLight = project.themeStyle.mode === 'light';
   const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState(0);
   const [showRideMateVideo, setShowRideMateVideo] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
 
   // Reset screenshot index and video toggle whenever the active project changes
   useEffect(() => {
@@ -39,21 +40,37 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
     setShowRideMateVideo(false);
   }, [project.id]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent, totalScreens: number) => {
+    if (touchStartXRef.current === null) return;
+    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
+    const SWIPE_THRESHOLD = 45;
+    if (diff > SWIPE_THRESHOLD) {
+      setSelectedScreenshotIndex((prev) => (prev < totalScreens - 1 ? prev + 1 : 0));
+    } else if (diff < -SWIPE_THRESHOLD) {
+      setSelectedScreenshotIndex((prev) => (prev > 0 ? prev - 1 : totalScreens - 1));
+    }
+    touchStartXRef.current = null;
+  };
+
   return (
-    <div className="relative flex flex-col items-center">
-      {/* Modern Flagship Smartphone Chassis */}
-      <div className={`relative w-[340px] sm:w-[360px] h-[700px] rounded-[52px] p-3.5 shadow-2xl transition-all duration-500 ${
+    <div className="relative flex flex-col items-center w-full">
+      {/* Modern Flagship Smartphone Chassis with Responsive Max-Width */}
+      <div className={`relative w-full max-w-[340px] sm:max-w-[360px] h-[660px] sm:h-[700px] rounded-[48px] sm:rounded-[52px] p-3 sm:p-3.5 shadow-2xl transition-all duration-500 ${
         isLight
           ? 'bg-[#ded2c7] border-4 border-[#c8b7a9] ring-1 ring-black/10 shadow-[0_25px_60px_-15px_rgba(42,27,20,0.22)]'
           : 'bg-[#0c0d12] border-4 border-[#24283b]/60 ring-1 ring-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)]'
       }`}>
         {/* Outer Titanium Side Reflection */}
-        <div className={`absolute inset-0 rounded-[48px] pointer-events-none ring-1 ring-inset ${
+        <div className={`absolute inset-0 rounded-[44px] sm:rounded-[48px] pointer-events-none ring-1 ring-inset ${
           isLight ? 'ring-white/40' : 'ring-white/10'
         }`} />
 
         {/* Screen Bezel Container */}
-        <div className={`relative w-full h-full rounded-[42px] overflow-hidden flex flex-col justify-between select-none border transition-colors duration-500 ${
+        <div className={`relative w-full h-full rounded-[38px] sm:rounded-[42px] overflow-hidden flex flex-col justify-between select-none border transition-colors duration-500 ${
           isLight 
             ? 'bg-[#fcf8f4] text-[#2a1b14] border-[#e8d8cc]' 
             : 'bg-[#000000] text-white border-white/5'
@@ -120,8 +137,12 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                   </span>
                 </div>
 
-                {/* Screenshot Display Frame */}
-                <div className="relative rounded-2xl overflow-hidden border border-[#ead8cb] bg-[#f7eee6] shadow-md flex-1 min-h-[490px] flex items-center justify-center group">
+                {/* Screenshot Display Frame with Touch Gestures */}
+                <div
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={(e) => handleTouchEnd(e, project.screenshots.length)}
+                  className="relative rounded-2xl overflow-hidden border border-[#ead8cb] bg-[#f7eee6] shadow-md flex-1 min-h-[460px] sm:min-h-[490px] flex items-center justify-center group touch-pan-y"
+                >
                   <img
                     src={project.screenshots[selectedScreenshotIndex]?.imagePath || '/images/resaly/23613_edit.png'}
                     alt={project.screenshots[selectedScreenshotIndex]?.title || 'Resaly Screen'}
@@ -129,20 +150,22 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                     className="w-full h-full object-cover object-top"
                   />
 
-                  {/* Left / Right Chevron Navigation */}
+                  {/* Left / Right Chevron Navigation with Accessible >=44px Hit Target */}
                   <button
                     onClick={() => setSelectedScreenshotIndex((prev) => (prev > 0 ? prev - 1 : project.screenshots.length - 1))}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 border border-[#ead8cb] text-[#2a1b14] flex items-center justify-center opacity-80 hover:opacity-100 shadow-md transition-all"
-                    title="Screen précédente"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 border border-[#ead8cb] text-[#2a1b14] flex items-center justify-center opacity-85 hover:opacity-100 shadow-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#de854f] relative before:absolute before:-inset-2 before:content-['']"
+                    title="Écran précédent"
+                    aria-label="Écran précédent"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => setSelectedScreenshotIndex((prev) => (prev < project.screenshots.length - 1 ? prev + 1 : 0))}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 border border-[#ead8cb] text-[#2a1b14] flex items-center justify-center opacity-80 hover:opacity-100 shadow-md transition-all"
-                    title="Screen suivante"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 border border-[#ead8cb] text-[#2a1b14] flex items-center justify-center opacity-85 hover:opacity-100 shadow-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#de854f] relative before:absolute before:-inset-2 before:content-['']"
+                    title="Écran suivant"
+                    aria-label="Écran suivant"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
 
                   {/* Minimal Caption Sheet Overlay */}
@@ -154,17 +177,22 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                       {project.screenshots[selectedScreenshotIndex]?.caption}
                     </p>
 
-                    {/* Pagination Indicator Dots */}
-                    <div className="flex items-center justify-center gap-1.5 pt-2">
-                      {project.screenshots.map((_, idx) => (
+                    {/* Pagination Indicator Dots with Accessible Tap Area */}
+                    <div className="flex items-center justify-center gap-1 pt-2" role="group" aria-label="Sélecteur d'écran">
+                      {project.screenshots.map((s, idx) => (
                         <button
                           key={idx}
                           onClick={() => setSelectedScreenshotIndex(idx)}
-                          className={`h-1.5 rounded-full transition-all ${
-                            selectedScreenshotIndex === idx ? 'w-5 bg-[#de854f]' : 'w-1.5 bg-[#de854f]/30 hover:bg-[#de854f]/60'
-                          }`}
-                          title={`Aller à l'écran ${idx + 1}`}
-                        />
+                          className="p-1.5 relative flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#de854f]"
+                          aria-label={`Aller à l'écran ${idx + 1}: ${s.title}`}
+                          aria-current={selectedScreenshotIndex === idx ? 'true' : undefined}
+                        >
+                          <span
+                            className={`block h-1.5 rounded-full transition-all ${
+                              selectedScreenshotIndex === idx ? 'w-5 bg-[#de854f]' : 'w-1.5 bg-[#de854f]/30 hover:bg-[#de854f]/60'
+                            }`}
+                          />
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -217,7 +245,11 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                     />
                   </div>
                 ) : (
-                  <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-black shadow-xl flex-1 min-h-[490px] flex items-center justify-center group">
+                  <div
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={(e) => handleTouchEnd(e, project.screenshots.length)}
+                    className="relative rounded-2xl overflow-hidden border border-white/15 bg-black shadow-xl flex-1 min-h-[460px] sm:min-h-[490px] flex items-center justify-center group touch-pan-y"
+                  >
                     <img
                       src={project.screenshots[selectedScreenshotIndex]?.imagePath || '/images/ridemate/ridemate-dashboard.png'}
                       alt={project.screenshots[selectedScreenshotIndex]?.title || 'RideMate Screen'}
@@ -225,20 +257,22 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                       className="w-full h-full object-cover object-top"
                     />
 
-                    {/* Navigation Arrows */}
+                    {/* Navigation Arrows with Accessible >=44px Hit Target */}
                     <button
                       onClick={() => setSelectedScreenshotIndex((prev) => (prev > 0 ? prev - 1 : project.screenshots.length - 1))}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/75 border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 shadow-md transition-all"
-                      title="Screen précédente"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/85 border border-white/25 text-white flex items-center justify-center opacity-85 hover:opacity-100 shadow-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2f019] relative before:absolute before:-inset-2 before:content-['']"
+                      title="Écran précédent"
+                      aria-label="Écran précédent"
                     >
-                      <ChevronLeft className="w-4 h-4" />
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => setSelectedScreenshotIndex((prev) => (prev < project.screenshots.length - 1 ? prev + 1 : 0))}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/75 border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 shadow-md transition-all"
-                      title="Screen suivante"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/85 border border-white/25 text-white flex items-center justify-center opacity-85 hover:opacity-100 shadow-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2f019] relative before:absolute before:-inset-2 before:content-['']"
+                      title="Écran suivant"
+                      aria-label="Écran suivant"
                     >
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-5 h-5" />
                     </button>
 
                     {/* Minimal Caption Sheet Overlay */}
@@ -250,17 +284,22 @@ export const PhoneFrame: React.FC<Props> = memo(({ project }) => {
                         {project.screenshots[selectedScreenshotIndex]?.caption}
                       </p>
 
-                      {/* Pagination Indicator Dots */}
-                      <div className="flex items-center justify-center gap-1.5 pt-2">
-                        {project.screenshots.map((_, idx) => (
+                      {/* Pagination Indicator Dots with Accessible Tap Area */}
+                      <div className="flex items-center justify-center gap-1 pt-2" role="group" aria-label="Sélecteur d'écran">
+                        {project.screenshots.map((s, idx) => (
                           <button
                             key={idx}
                             onClick={() => setSelectedScreenshotIndex(idx)}
-                            className={`h-1.5 rounded-full transition-all ${
-                              selectedScreenshotIndex === idx ? 'w-5 bg-[#c2f019]' : 'w-1.5 bg-white/30 hover:bg-white/60'
-                            }`}
-                            title={`Aller à l'écran ${idx + 1}`}
-                          />
+                            className="p-1.5 relative flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2f019]"
+                            aria-label={`Aller à l'écran ${idx + 1}: ${s.title}`}
+                            aria-current={selectedScreenshotIndex === idx ? 'true' : undefined}
+                          >
+                            <span
+                              className={`block h-1.5 rounded-full transition-all ${
+                                selectedScreenshotIndex === idx ? 'w-5 bg-[#c2f019]' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                              }`}
+                            />
+                          </button>
                         ))}
                       </div>
                     </div>

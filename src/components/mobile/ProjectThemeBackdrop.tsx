@@ -43,7 +43,6 @@ export const ProjectThemeBackdrop: React.FC<Props> = memo(({ currentProject }) =
                 style={{
                   height: `${h}%`,
                   transformOrigin: 'bottom',
-                  willChange: 'transform',
                   animation: `equalizer ${1.4 + (i % 5) * 0.25}s ease-in-out infinite alternate`,
                   animationDelay: `${(i * 0.08)}s`,
                 }}

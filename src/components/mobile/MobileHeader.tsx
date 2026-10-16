@@ -46,12 +46,15 @@ export const MobileHeader: React.FC<Props> = ({ project }) => {
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className={`p-2 transition-all ${project.themeStyle.cardRadius} ${
+            className={`p-2 transition-all focus-visible:outline-none focus-visible:ring-2 ${
+              isLight ? 'focus-visible:ring-[#de854f]' : 'focus-visible:ring-white/70'
+            } ${project.themeStyle.cardRadius} ${
               isLight 
                 ? 'text-[#68554b] hover:text-[#2a1b14] hover:bg-black/5' 
                 : 'text-zinc-400 hover:text-white hover:bg-white/5'
             }`}
             title="GitHub Profile"
+            aria-label="Profil GitHub de Nizar Beriane"
           >
             <Github className="w-4 h-4" />
           </a>
@@ -59,23 +62,29 @@ export const MobileHeader: React.FC<Props> = ({ project }) => {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className={`p-2 transition-all ${project.themeStyle.cardRadius} ${
+            className={`p-2 transition-all focus-visible:outline-none focus-visible:ring-2 ${
+              isLight ? 'focus-visible:ring-[#de854f]' : 'focus-visible:ring-white/70'
+            } ${project.themeStyle.cardRadius} ${
               isLight 
                 ? 'text-[#68554b] hover:text-[#2a1b14] hover:bg-black/5' 
                 : 'text-zinc-400 hover:text-white hover:bg-white/5'
             }`}
             title="LinkedIn Profile"
+            aria-label="Profil LinkedIn de Nizar Beriane"
           >
             <Linkedin className="w-4 h-4" />
           </a>
           <a
             href={`mailto:${personalInfo.email}`}
-            className={`p-2 transition-all ${project.themeStyle.cardRadius} ${
+            className={`p-2 transition-all focus-visible:outline-none focus-visible:ring-2 ${
+              isLight ? 'focus-visible:ring-[#de854f]' : 'focus-visible:ring-white/70'
+            } ${project.themeStyle.cardRadius} ${
               isLight 
                 ? 'text-[#68554b] hover:text-[#2a1b14] hover:bg-black/5' 
                 : 'text-zinc-400 hover:text-white hover:bg-white/5'
             }`}
             title="Send Email"
+            aria-label="Envoyer un e-mail à Nizar Beriane"
           >
             <Mail className="w-4 h-4" />
           </a>
@@ -84,7 +93,7 @@ export const MobileHeader: React.FC<Props> = ({ project }) => {
             href={personalInfo.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
               isLight ? 'rounded-full' : 'rounded-xl'
             }`}
             style={{
@@ -92,6 +101,7 @@ export const MobileHeader: React.FC<Props> = ({ project }) => {
               color: project.themeStyle.accentHex,
               backgroundColor: `${project.themeStyle.accentHex}14`,
             }}
+            aria-label="Télécharger le Curriculum Vitae de Nizar Beriane"
           >
             <FileDown className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">CV / Resume</span>

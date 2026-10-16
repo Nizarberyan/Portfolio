@@ -210,6 +210,10 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
           ],
         });
 
+        const prefersReducedMotion = typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         let startTime = performance.now();
 
         const renderWebGPU = () => {
@@ -223,13 +227,13 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
 
           // Smooth lerp colors
           for (let i = 0; i < 3; i++) {
-            currentPrimary[i] += (targetPrimary[i] - currentPrimary[i]) * 0.04;
-            currentSecondary[i] += (targetSecondary[i] - currentSecondary[i]) * 0.04;
+            currentPrimary[i] += (targetPrimary[i] - currentPrimary[i]) * (prefersReducedMotion ? 1.0 : 0.04);
+            currentSecondary[i] += (targetSecondary[i] - currentSecondary[i]) * (prefersReducedMotion ? 1.0 : 0.04);
           }
 
           const uniformData = new Float32Array([
             canvas.width, canvas.height,
-            elapsed, 1.0,
+            prefersReducedMotion ? 1.0 : elapsed, 1.0,
             currentPrimary[0], currentPrimary[1], currentPrimary[2], 0.0,
             currentSecondary[0], currentSecondary[1], currentSecondary[2], 0.0,
           ]);
@@ -257,10 +261,12 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
 
           device.queue.submit([commandEncoder.finish()]);
 
-          animFrameId = requestAnimationFrame(renderWebGPU);
+          if (!prefersReducedMotion) {
+            animFrameId = requestAnimationFrame(renderWebGPU);
+          }
         };
 
-        animFrameId = requestAnimationFrame(renderWebGPU);
+        renderWebGPU();
         setRenderMode('WebGPU');
 
         cleanupWebGPU = () => {
@@ -280,6 +286,10 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
       if (!ctx) return;
 
       setRenderMode('Hardware-Canvas');
+      const prefersReducedMotion = typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       let startTime = performance.now();
 
       const render2D = () => {
@@ -295,15 +305,15 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
 
         // Lerp colors towards current active project
         for (let i = 0; i < 3; i++) {
-          currentPrimary[i] += (targetPrimary[i] - currentPrimary[i]) * 0.05;
-          currentSecondary[i] += (targetSecondary[i] - currentSecondary[i]) * 0.05;
+          currentPrimary[i] += (targetPrimary[i] - currentPrimary[i]) * (prefersReducedMotion ? 1.0 : 0.05);
+          currentSecondary[i] += (targetSecondary[i] - currentSecondary[i]) * (prefersReducedMotion ? 1.0 : 0.05);
         }
 
         ctx.clearRect(0, 0, width, height);
 
         // Ambient fluid gradient orb rendered directly on GPU
-        const cx = width * (0.65 + Math.sin(elapsed * 0.25) * 0.1);
-        const cy = height * (0.35 + Math.cos(elapsed * 0.3) * 0.08);
+        const cx = width * (0.65 + (prefersReducedMotion ? 0 : Math.sin(elapsed * 0.25) * 0.1));
+        const cy = height * (0.35 + (prefersReducedMotion ? 0 : Math.cos(elapsed * 0.3) * 0.08));
         const radius = Math.min(width, height) * 0.55;
 
         const r1 = Math.round(currentPrimary[0] * 255);
@@ -322,28 +332,30 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, width, height);
 
-        // Draw micro-particles smoothly without layout engine overhead
-        particles.forEach((p) => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0) p.x = 1;
-          if (p.x > 1) p.x = 0;
-          if (p.y < 0) p.y = 1;
-          if (p.y > 1) p.y = 0;
+        // Draw micro-particles smoothly without layout engine overhead (omit on reduced-motion)
+        if (!prefersReducedMotion) {
+          particles.forEach((p) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = 1;
+            if (p.x > 1) p.x = 0;
+            if (p.y < 0) p.y = 1;
+            if (p.y > 1) p.y = 0;
 
-          const px = p.x * width;
-          const py = p.y * height;
+            const px = p.x * width;
+            const py = p.y * height;
 
-          ctx.beginPath();
-          ctx.arc(px, py, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r1}, ${g1}, ${b1}, ${p.alpha * 0.25})`;
-          ctx.fill();
-        });
+            ctx.beginPath();
+            ctx.arc(px, py, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r1}, ${g1}, ${b1}, ${p.alpha * 0.25})`;
+            ctx.fill();
+          });
 
-        animFrameId = requestAnimationFrame(render2D);
+          animFrameId = requestAnimationFrame(render2D);
+        }
       };
 
-      animFrameId = requestAnimationFrame(render2D);
+      render2D();
     };
 
     // Size canvas accurately with DPR clamped to 1.5 to prevent memory waste
@@ -387,7 +399,6 @@ export const GPUAtmosphereCanvas: React.FC<Props> = ({ project }) => {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full block"
-        style={{ willChange: 'transform' }}
       />
     </div>
   );

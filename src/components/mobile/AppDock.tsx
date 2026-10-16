@@ -38,6 +38,8 @@ export const AppDock: React.FC<Props> = memo(({ activeProject, onSelectProject }
   return (
     <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${activeProject.themeStyle.themeClass}`}>
       <div 
+        role="tablist"
+        aria-label="Navigation des projets mobiles"
         className={`p-2 backdrop-blur-2xl border transition-all duration-500 flex items-center gap-1.5 sm:gap-3 ${activeProject.themeStyle.dockBg} ${activeProject.themeStyle.cardRadius}`}
       >
         {mobileProjects.map((p, idx) => {
@@ -45,8 +47,15 @@ export const AppDock: React.FC<Props> = memo(({ activeProject, onSelectProject }
           return (
             <button
               key={p.id}
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`project-panel-${p.id}`}
+              aria-label={`Démonstration ${p.name} - ${p.category}`}
+              tabIndex={0}
               onClick={() => onSelectProject(p)}
-              className={`group relative flex items-center gap-2.5 px-3.5 py-2.5 transition-all duration-300 ${activeProject.themeStyle.cardRadius} ${
+              className={`group relative flex items-center gap-2.5 px-3.5 py-2.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 ${
+                isLight ? 'focus-visible:ring-[#de854f]' : 'focus-visible:ring-white/80'
+              } ${activeProject.themeStyle.cardRadius} ${
                 isActive
                   ? isLight
                     ? 'bg-[#faefe8] text-[#2a1b14] shadow-md border border-[#de854f]/40 scale-105'
