@@ -136,7 +136,7 @@ export const projects: Project[] = [
       "Architected the TypeScript backend with NestJS and PostgreSQL for concurrent rideshare synchronization."
     ],
     techStack: ["React Native", "Expo", "TypeScript", "NestJS", "Next.js"],
-    githubUrl: "https://github.com/Nizarberyan/ridemate",
+    githubUrl: "https://github.com/Nizarberyan/RideMate-mobile",
     citationId: 3,
     featured: true,
     category: "Mobile"
@@ -242,7 +242,7 @@ export const citations: Citation[] = [
     title: "RideMate: Real-Time Sustainable Mobility & Carpooling App",
     publisher: "GitHub Repository",
     date: "2026",
-    url: "https://github.com/Nizarberyan/ridemate",
+    url: "https://github.com/Nizarberyan/RideMate-mobile",
     accessDate: "2026-10-15",
     quote: "React Native, Expo, TypeScript, NestJS, and Next.js carpooling app serving 500+ active users.",
     type: "repo"
