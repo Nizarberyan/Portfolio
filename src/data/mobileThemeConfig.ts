@@ -90,16 +90,16 @@ export const mobileProjects: ProjectTheme[] = [
       dockBg: 'bg-[#ffffff]/95 border-[#ead8cb] text-[#68554b] shadow-xl shadow-[#2a1b14]/10',
       phoneDynamicIslandContent: {
         title: 'Tableau de Bord Pro',
-        subtitle: 'Solde: 4,587,866 MAD',
+        subtitle: 'Planning • 15+ Salons Actifs',
         type: 'booking',
       },
       ambientThemeDescription: 'French Atelier Aesthetic & High-Concurrency Booking',
     },
     metrics: [
-      { label: 'Chiffre d’Affaires Pro', value: '4.58M MAD', detail: 'Solde géré en direct sur l’app' },
-      { label: 'Salons Actifs', value: '15+ Salons', detail: 'Tanger & Région Nord Maroc' },
-      { label: 'Gain d’Efficacité', value: '+25%', detail: 'Zéro chevauchement de rendez-vous' },
-      { label: 'Framework & Engine', value: 'Flutter / Dart', detail: 'Rendu 60 FPS iOS & Android' },
+      { label: 'Salons Partenaires', value: '15+ Salons', detail: 'Déployé à Tanger et Région Nord' },
+      { label: 'Gain d’Efficacité', value: '+25%', detail: 'Optimisation des créneaux & workflows' },
+      { label: 'Gestion des Conflits', value: '0 Conflit', detail: 'Verrouillage temps réel anti-chevauchement' },
+      { label: 'Performance Mobile', value: '60 FPS', detail: 'Rendu Flutter fluide iOS & Android' },
     ],
     techStack: [
       { name: 'Flutter', role: 'Multi-Platform Client', highlight: true },
@@ -111,7 +111,7 @@ export const mobileProjects: ProjectTheme[] = [
       { name: 'Push Notifications', role: 'Appointment Reminders' },
     ],
     description:
-      'Application mobile Flutter professionnelle conçue pour les salons de beauté et instituts de coiffure au Maroc. Offre un tableau de bord financier en temps réel avec courbes de réservation, gestion multi-stylistes sans conflits d’horaires, et flux de réservation instantané couplé à une API REST Symfony.',
+      'Application mobile Flutter professionnelle conçue pour les salons de beauté et instituts de coiffure au Maroc. Offre un tableau de bord d’activité en temps réel avec suivi des réservations, gestion multi-stylistes sans conflits d’horaires, et flux de réservation instantané couplé à une API REST Symfony.',
     architectureHighlights: [
       {
         title: 'Verrouillage de Créneau sans Conflit en Temps Réel',
@@ -133,8 +133,8 @@ export const mobileProjects: ProjectTheme[] = [
     screenshots: [
       {
         id: 'dashboard',
-        title: 'Tableau de Bord & Analytics',
-        caption: 'Solde disponible en MAD, courbe des réservations hebdomadaire et liste des rendez-vous (Maquillage, Épilation, Manucure)',
+        title: 'Tableau de Bord & Réservations',
+        caption: 'Vue d’activité hebdomadaire, courbe des rendez-vous et gestion des prestations (Maquillage, Épilation, Manucure)',
         imagePath: '/images/resaly/23613_edit.png',
       },
       {
